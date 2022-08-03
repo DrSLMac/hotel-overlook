@@ -13,3 +13,9 @@
 // I should be able to filter the list of available rooms by their roomType property
 // I should be able to select a room for booking
 // In the event that no rooms are available for the date/roomType selected, display a message fiercely apologizing to the user and asking them to adjust their room search
+
+class Customer {
+    constructor() {
+
+    }
+}
