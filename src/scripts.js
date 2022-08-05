@@ -1,5 +1,7 @@
 import './css/styles.css';
-import './images/favicon.ico';
+import './images/favicon-16x16.png';
+import { getDetailsData } from './apiCalls';
+
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
 
@@ -33,3 +35,6 @@ console.log('This is the JavaScript entry file - your code begins here.');
 //       })
 //       .catch(error => console.log(error))
 //     }
+
+getDetailsData().then((data) => console.log(data))
+.catch((error) => console.log(error))
