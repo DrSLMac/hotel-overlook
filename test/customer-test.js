@@ -37,8 +37,12 @@ describe('Customer Class', () => {
     expect(newCustomer.password).to.equal("overlook2021")
   });
 
+  it("should start with zero dollars spent", () => {
+    expect(newCustomer.totalSpent).to.equal(0)
+  })
+
   it("should be able to keep track of past bookings", () => {
-    
+
     expect(newCustomer.roomBookings).to.deep.equal()
   })
 });
