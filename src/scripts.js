@@ -1,14 +1,38 @@
 import './css/styles.css';
 import './images/favicon-16x16.png';
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
 
-// An example of how you tell webpack to use a CSS (SCSS) file
+import { Customer } from "./classes/Customer.js"
+import { Room } from "./classes/Room.js"
+import { Booking } from "./classes/Booking.js"
 
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
+// 👇🏽👇🏽 Document Query Selectors 👇🏽👇🏽
+// ⭐️ Log In Page ⭐️
+const loadingPage = document.querySelector(".loading-page");
+const usernameInput = document.querySelector('.username-input');
+const passwordInput = document.querySelector('.password-input');
+const loginButton = document.querySelector('.login-button')
+const incorrectInputMessage = document.querySelector('incorrect-login-input');
+
+// 🎧 Event Listeners 🎧
+window.addEventListener("load", () => {
+    getCurrentDate();
+    //fetch allCustomers? rooms? bookings?
+})
+loginButton.addEventListener('click', login);
+
+// 👇🏽👇🏽 Functions & Event Handlers 👇🏽👇🏽
 
 
-console.log('This is the JavaScript entry file - your code begins here.');
+
+
+
+const show = (element) => {
+    element.classList.remove("hidden");
+}
+
+const hide = (element) => {
+    element.classList.add("hidden");
+}
 
 
 // function postApiData(url, data) {
@@ -33,3 +57,14 @@ console.log('This is the JavaScript entry file - your code begins here.');
 //       })
 //       .catch(error => console.log(error))
 //     }
+
+// const getCurrentDate = () => {
+    //     let today = new Date().toLocaleDateString('en-US').split('/');
+    //     today[0] = `0${today[0]}`;
+    //     let year = today.pop();
+    //     today.unshift(year);
+    //     today = today.join("-");
+    //     // bookingDate.setAttribute("value", today);//bookingDate is a query selector
+    //     // bookingDate.setAttribute("min", today);
+    // }
+    // console.log('getCurrentDate: ', getCurrentDate())
