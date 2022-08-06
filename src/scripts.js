@@ -1,5 +1,5 @@
 import './css/styles.css';
-import './images/favicon.ico';
+import './images/favicon-16x16.png';
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
 
