@@ -6,23 +6,64 @@ import { Room } from "./classes/Room.js"
 import { Booking } from "./classes/Booking.js"
 
 // 👇🏽👇🏽 Document Query Selectors 👇🏽👇🏽
+
 // ⭐️ Log In Page ⭐️
 const loadingPage = document.querySelector(".loading-page");
-const usernameInput = document.querySelector('.username-input');
-const passwordInput = document.querySelector('.password-input');
+const username = document.querySelector('.username-input');
+const password = document.querySelector('.password-input');
 const loginButton = document.querySelector('.login-button')
 const incorrectInputMessage = document.querySelector('incorrect-login-input');
+// 🎛 Customer Dashboard 🎛
+
+
+// 🌏 Global Variables 🌏
+let allCustomersData;
+let guests = [];
+let currentCustomer;
+let allRoomsData;
+let allBookingsData;
+let roomNumber;
+let chosedDate;
 
 // 🎧 Event Listeners 🎧
-window.addEventListener("load", () => {
-    getCurrentDate();
+// window.addEventListener("load", () => {
+    // getCurrentDate();
     //fetch allCustomers? rooms? bookings?
-})
+// })
 loginButton.addEventListener('click', login);
+
+// 🐕 Fetch Functions 🐕
+function allCustomersFetch() {
+    fetch(`http://localhost:3001/api/v1/customers`)
+    .then(response => response.json())
+    .then(data => {
+        allCustomersData = data.customers
+        console.log('allCustomersData: ', allCustomersData)
+        getGuests()
+    })
+}
 
 // 👇🏽👇🏽 Functions & Event Handlers 👇🏽👇🏽
 
+function getGuests() {
+    allCustomersData.forEach(guest => {
+        console.log('customer: ', guest)
+    getGuests.push(new Customer(guest))
+})
+};
 
+function login(e) {
+    e.preventDefault();
+    console.log('guests: ', guests)
+    return guests.find(guest => {
+        if(guest.username === username.value && password.value === 'overlook2021') {
+            hide(loadingPage)
+            console.log('guest: ', guest)
+            return guest
+}
+
+    })
+};
 
 
 
