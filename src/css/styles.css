@@ -1,28 +1,38 @@
 * {
-  border: solid 2px red;
+  /* border: solid 2px red; */
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 } 
 
-html {
-  display: flex;
-  align-content: center;
+html{
+  padding: 30px;
   height: 100%;
 }
 
 body {
-  display: block;
-  margin: 0;
-  background-image: url(/src/images/the-claymore-hotel.png);
+  background-image: linear-gradient(to left, rgba(82, 102, 79, 0.7), rgba(82, 102, 79, .7)), url(/src/images/the-claymore-hotel.png);
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: top;
+  position: relative;
   height: 100%;
   width: 100%;
   background-color: rgba(82, 102, 79);
-  text-align: center;
 }
+
+/* body {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  height: 100vh;
+  text-align: center;  
+} */
+
 
 h1 {
   font-family: 'Cormorant SC', serif;
-  font-size: 8vh;
+  font-size: 6vh;
   margin: 0;
   color: white;
   /* padding-left: 2vw; */
@@ -32,9 +42,8 @@ h1 {
 h2 {
   font-family: 'Cormorant SC', serif;
   font-size: 3vh;
-  color: white;
-  /* padding-left: 2vw; */
-  text-shadow: 13px 9px 12px rgba(0,0,0,0.81);
+  color: black;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.507);
 }
 
 h3 {
@@ -49,8 +58,31 @@ h3 {
 .hotel-header {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  width: 60%;
+  position: absolute;
+  width: 40%;
   align-items: center;
-  /* margin-left: 2vw; */
+}
+
+.loading-page {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.564);
+  border-radius: 12px;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.claymore-house-container {
+  padding: 50px;
+}
+
+.login-container {
+  padding: 50px;
+  font-size: larger;
+}
+
+.hidden {
+  display: none;
 }
