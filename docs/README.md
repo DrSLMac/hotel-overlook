@@ -1,6 +1,6 @@
-# Welcome to The Claymore House
-## Where ancient tradition meets modern luxury.
-## Fàilte gu Alba! (Scottish Gaelic for "Welcome to Scotland!")
+# 🏰 Welcome to The Claymore House 🏰
+## Where ancient tradition meets modern luxury
+### Fàilte gu Alba! (Scottish Gaelic for "Welcome to Scotland!")
 
 ## Introduction
  - The purpose of this project was to allow students to practice some of the foundational concepts learned so far within the module. There are other extensions that test different skills that we can build on. The project allowed us to personalize/entertain different ideas with HTML/CSS as well as the functionality(JavaScript) behind the web page created.
