@@ -1,4 +1,5 @@
-# Welcome to The Claymore House, where ancient tradition meets modern luxury.
+# Welcome to The Claymore House
+## Where ancient tradition meets modern luxury.
 ## Fàilte gu Alba! (Scottish Gaelic for "Welcome to Scotland!")
 
 ## Introduction
