@@ -1,14 +1,79 @@
 import './css/styles.css';
 import './images/favicon-16x16.png';
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
 
-// An example of how you tell webpack to use a CSS (SCSS) file
+import { Customer } from "./classes/Customer.js"
+import { Room } from "./classes/Room.js"
+import { Booking } from "./classes/Booking.js"
 
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
+// 👇🏽👇🏽 Document Query Selectors 👇🏽👇🏽
+
+// ⭐️ Log In Page ⭐️
+const loadingPage = document.querySelector(".loading-page");
+const username = document.querySelector('.username-input');
+const password = document.querySelector('.password-input');
+const loginButton = document.querySelector('.login-button')
+const incorrectInputMessage = document.querySelector('incorrect-login-input');
+// 🎛 Customer Dashboard 🎛
 
 
-console.log('This is the JavaScript entry file - your code begins here.');
+// 🌏 Global Variables 🌏
+let allCustomersData;
+let guests = [];
+let currentCustomer;
+let allRoomsData;
+let allBookingsData;
+let roomNumber;
+let chosedDate;
+
+// 🎧 Event Listeners 🎧
+// window.addEventListener("load", () => {
+    // getCurrentDate();
+    //fetch allCustomers? rooms? bookings?
+// })
+loginButton.addEventListener('click', login);
+
+// 🐕 Fetch Functions 🐕
+function allCustomersFetch() {
+    fetch(`http://localhost:3001/api/v1/customers`)
+    .then(response => response.json())
+    .then(data => {
+        allCustomersData = data.customers
+        console.log('allCustomersData: ', allCustomersData)
+        getGuests()
+    })
+}
+
+// 👇🏽👇🏽 Functions & Event Handlers 👇🏽👇🏽
+
+function getGuests() {
+    allCustomersData.forEach(guest => {
+        console.log('customer: ', guest)
+    getGuests.push(new Customer(guest))
+})
+};
+
+function login(e) {
+    e.preventDefault();
+    console.log('guests: ', guests)
+    return guests.find(guest => {
+        if(guest.username === username.value && password.value === 'overlook2021') {
+            hide(loadingPage)
+            console.log('guest: ', guest)
+            return guest
+}
+
+    })
+};
+
+
+
+const show = (element) => {
+    element.classList.remove("hidden");
+}
+
+const hide = (element) => {
+    element.classList.add("hidden");
+}
 
 
 // function postApiData(url, data) {
@@ -33,3 +98,14 @@ console.log('This is the JavaScript entry file - your code begins here.');
 //       })
 //       .catch(error => console.log(error))
 //     }
+
+// const getCurrentDate = () => {
+    //     let today = new Date().toLocaleDateString('en-US').split('/');
+    //     today[0] = `0${today[0]}`;
+    //     let year = today.pop();
+    //     today.unshift(year);
+    //     today = today.join("-");
+    //     // bookingDate.setAttribute("value", today);//bookingDate is a query selector
+    //     // bookingDate.setAttribute("min", today);
+    // }
+    // console.log('getCurrentDate: ', getCurrentDate())
