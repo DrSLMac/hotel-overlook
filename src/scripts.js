@@ -1,16 +1,12 @@
 import './css/styles.css';
 import './images/favicon-16x16.png';
 
-import { getDetailsData } from './apiCalls';
+import getDetailsData from './apiCalls';
 
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-
-import { Customer } from "./classes/Customer.js"
-import { Room } from "./classes/Room.js"
-import { Booking } from "./classes/Booking.js"
-
+import Customer from "./classes/Customer"
+import Room from "./classes/Room"
+import Booking from "./classes/Booking"
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // 👇🏽👇🏽 Document Query Selectors 👇🏽👇🏽
 
 // ⭐️ Log In Page ⭐️
@@ -32,10 +28,11 @@ let roomNumber;
 let chosedDate;
 
 // 🎧 Event Listeners 🎧
-// window.addEventListener("load", () => {
+window.addEventListener("load", () => {
     // getCurrentDate();
-    //fetch allCustomers? rooms? bookings?
-// })
+    allCustomersFetch()
+   // fetch allCustomers? rooms? bookings?
+})
 loginButton.addEventListener('click', login);
 
 // 🐕 Fetch Functions 🐕
@@ -53,14 +50,14 @@ function allCustomersFetch() {
 
 function getGuests() {
     allCustomersData.forEach(guest => {
-        console.log('customer: ', guest)
-    getGuests.push(new Customer(guest))
+        guests.push(new Customer(guest))
+        console.log('guest ln 53: ', guest)
 })
 };
 
 function login(e) {
     e.preventDefault();
-    console.log('guests: ', guests)
+    console.log('guests ln 59: ', guests)
     return guests.find(guest => {
         if(guest.username === username.value && password.value === 'overlook2021') {
             hide(loadingPage)
