@@ -1,5 +1,5 @@
 # 🏰 Welcome to The Claymore House 🏰
-## Where ancient tradition meets modern luxury
+## Where Ancient Tradition Meets Modern Luxury
 ### Fàilte gu Alba! (Scottish Gaelic for "Welcome to Scotland!")
 
 ## Introduction
