@@ -1,9 +1,11 @@
+
 * {
   /* border: solid 2px red; */
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
 } 
+
 
 html{
   padding: 30px;

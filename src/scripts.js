@@ -1,6 +1,12 @@
 import './css/styles.css';
 import './images/favicon-16x16.png';
 
+import { getDetailsData } from './apiCalls';
+
+// This is the JavaScript entry file - your code begins here
+// Do not delete or rename this file ********
+
+
 import { Customer } from "./classes/Customer.js"
 import { Room } from "./classes/Room.js"
 import { Booking } from "./classes/Booking.js"
@@ -99,6 +105,10 @@ const hide = (element) => {
 //       .catch(error => console.log(error))
 //     }
 
+
+//getDetailsData().then((data) => console.log(data))
+//.catch((error) => console.log(error))
+
 // const getCurrentDate = () => {
     //     let today = new Date().toLocaleDateString('en-US').split('/');
     //     today[0] = `0${today[0]}`;
@@ -109,3 +119,4 @@ const hide = (element) => {
     //     // bookingDate.setAttribute("min", today);
     // }
     // console.log('getCurrentDate: ', getCurrentDate())
+
