@@ -12,6 +12,7 @@ class Customer {
     }
     
     getHotelRoomDetails(bookingsRepo, roomsData) {//checked and good
+        // console.log('bookRepo ln 15: ', bookingsRepo)
         const fullBookingDetails = bookingsRepo.reduce((roomsArray, booking) => {
             roomsData.forEach(room => {
                 if(room.number === booking.roomNumber) {
@@ -29,10 +30,12 @@ class Customer {
                     roomsArray.push(fullBookingDetails)
                 }
             })
+            // console.log('roomsArray: ', roomsArray)
             return roomsArray
         }, [])
         this.bookingRoomDetails = fullBookingDetails;
 // console.log('this.bookingRoomDetails: ', this.bookingRoomDetails)
+// console.log('fullBookingDetails: ', fullBookingDetails)
         return fullBookingDetails
     }
 
@@ -70,6 +73,8 @@ class Customer {
                 this.bookingRoomDetails.splice(this.bookingRoomDetails.indexOf(booking), 1)
             }
         })
+        console.log('this.roomsBooked: ', this.roomsBooked)
+        return this.roomsBooked
     };
 
     getTotalSpent() {

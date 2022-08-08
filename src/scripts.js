@@ -34,7 +34,9 @@ let chosedDate;
 window.addEventListener("load", () => {
     // getCurrentDate();
     allCustomersFetch()
-   // fetch allCustomers? rooms? bookings?
+    allRoomsFetch()
+    allBookingsFetch()
+console.log('allCustomersFetch() ln 38: ', allCustomersFetch())
 })
 loginButton.addEventListener('click', login);
 
@@ -42,11 +44,24 @@ loginButton.addEventListener('click', login);
 function allCustomersFetch() {
     fetch(`http://localhost:3001/api/v1/customers`)
     .then(response => response.json())
-    .then(data => {
-        allCustomersData = data.customers
-        // console.log('allCustomersData ln 47: ', allCustomersData)
+    .then(data => {allCustomersData = data.customers
         getGuests()
+        // console.log('allCustomersData ln 49: ', allCustomersData)
     })
+}
+
+function allRoomsFetch() {
+    fetch(`http://localhost:3001/api/v1/rooms`)
+    .then(response => response.json())
+    .then(data => {allRoomsData = data.rooms})
+    // console.log('rooms data ln 65: ', allRoomsData)
+}
+
+function allBookingsFetch() {
+    fetch(`http://localhost:3001/api/v1/bookings`)
+    .then(response => response.json())
+    .then(data => {allBookingsData = data.bookings})
+console.log('allBookingsdata ln 64: ', allBookingsData)
 }
 
 // 👇🏽👇🏽 Functions & Event Handlers 👇🏽👇🏽
@@ -54,19 +69,19 @@ function allCustomersFetch() {
 function getGuests() {
     allCustomersData.forEach(guest => {
         guests.push(new Customer(guest))
-        // console.log('guest ln 53: ', guest)
-})
+        // console.log('guest ln 71: ', guest)
+    })
 };
 
 function login(e) {
     e.preventDefault();
-    // console.log('guests ln 59: ', guests)
     return guests.find(guest => {
         if(guest.username === username.value && password.value === 'overlook2021') {
             hide(loadingPage)
             show(dashboardPage)
             console.log('guest ln 66: ', guest)
             greetGuest(guest)
+            getGuestBookingData(allBookingsData, allRoomsData)
             return guest
         } else {
             show(incorrectInputMessage)
@@ -75,11 +90,23 @@ function login(e) {
 };
 
 function greetGuest(guest) {
-console.log('guest ln 78: ', guest.name)
+// console.log('guest ln 78: ', guest.name)
     welcomeMessage.innerText = `Welcome Back, ${guest.name}!`
     // amountSpent.innerText = `$${guest.expenses}`
-
 }
+
+function getGuestBookingData(bookingsRepo) {
+    guests.forEach(guest => {
+        console.log('guest: ', guest)
+        guest.getHotelRoomDetails(bookingsRepo)
+    })
+    console.log('getGuestBookingData() ln 103: ', getGuestBookingData())
+}
+
+// ⭐️ ⭐️ 📑 Functions needed
+// 1. get previous bookings for each guest
+// 2. get total amount spent
+// 3. 
 
 const show = (element) => {
     element.classList.remove("hidden");
@@ -103,15 +130,7 @@ const hide = (element) => {
 //         .catch(error => console.log(error));
 // }
 
-// function fetchWords() {
-//     return fetch('http://localhost:3001/api/v1/words')
-//     .then(response => response.json())
-//       .then((data) => {
-//         data.forEach(word => words.push(word))
-//         setGame()
-//       })
-//       .catch(error => console.log(error))
-//     }
+
 
 
 //getDetailsData().then((data) => console.log(data))

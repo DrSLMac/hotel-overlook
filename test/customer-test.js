@@ -12,6 +12,18 @@ describe('Customer Class', () => {
       newCustomer2 = new Customer(customersData[1])
 
       bookingsRepo = [{ //10 bookings
+          id: "5fwrgu4i7k55hl6t7",
+          userID: 20,
+          date: "2022/02/16",
+          roomNumber: 7
+          },
+          {
+            id: "5fwrgu4i7k55hl6ui",
+            userID: 20,
+            date: "2022/02/07",
+            roomNumber: 24
+            },
+          {  
           id: "5fwrgu4i7k55hl6sz",
           userID: 9,
           date: "2022/04/22",
@@ -28,12 +40,6 @@ describe('Customer Class', () => {
           userID: 13,
           date: "2022/01/10",
           roomNumber: 12
-          },
-          {
-          id: "5fwrgu4i7k55hl6t7",
-          userID: 20,
-          date: "2022/02/16",
-          roomNumber: 7
           },
           {
           id: "5fwrgu4i7k55hl6t8",
@@ -459,6 +465,7 @@ describe('Customer Class', () => {
                   costPerNight: 172.09,
                   dateOfStay: '2022/02/05'
           })
+          console.log('findPastBookings(): ', findPastBookings())
   })
 
   it("should be able to see sum of total money spent", () => {
