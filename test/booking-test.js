@@ -32,11 +32,11 @@ describe('Booking Class', () => {
     expect(newBooking.userID).to.equal(9)
   });
 
-  it.skip('should have a booking date', () => {
+  it('should have a booking date', () => {
     expect(newBooking.date).to.equal("2022/04/22")
   });
 
-  it.skip('should have a room number', () => {
+  it('should have a room number', () => {
     expect(newBooking.roomNumber).to.equal(15)
   });
 });
