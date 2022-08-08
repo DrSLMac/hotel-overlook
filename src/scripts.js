@@ -75,9 +75,9 @@ function login(e) {
 };
 
 function greetGuest(guest) {
-// console.log('guest ln 78: ', guest)
-    welcomeMessage.innerText = `Welcome, ${guest.name}`
-    amountSpent.innerText = `$${guest.expenses}`
+console.log('guest ln 78: ', guest.name)
+    welcomeMessage.innerText = `Welcome Back, ${guest.name}!`
+    // amountSpent.innerText = `$${guest.expenses}`
 
 }
 
