@@ -133,6 +133,14 @@ h3 {
 }
 
 /* Guest Dashboard */
+.welcome-container {
+  display: flex;
+  font-weight: bold;
+  font-size: larger;
+  justify-content: center;
+  padding: 60px;
+}
+
 .amount-spent { 
   display: flex;
   justify-content: space-around;
