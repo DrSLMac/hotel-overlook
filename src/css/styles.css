@@ -23,15 +23,6 @@ body {
   background-color: rgba(82, 102, 79);
 }
 
-/* body {
-  display: flex;
-  width: 100%;
-  overflow: hidden;
-  height: 100vh;
-  text-align: center;  
-} */
-
-
 h1 {
   font-family: 'Cormorant SC', serif;
   font-size: 6vh;
@@ -57,6 +48,7 @@ h3 {
   text-shadow: 13px 9px 12px rgba(0,0,0,0.81);
 }
 
+
 .hotel-header {
   display: flex;
   flex-direction: column;
@@ -80,10 +72,129 @@ h3 {
   padding: 50px;
 }
 
+.username-container {
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  font-family: 'Cormorant SC', serif;
+  font-size: 2vh;
+  color: black;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.507);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  align-items: center;
+  text-align: center;
+}
+
 .login-container {
   padding: 50px;
   font-size: larger;
 }
+
+.login-button {
+  margin: 8px;
+  padding: 20px;
+}
+
+.btn {
+  background-color: white;
+  color: #041d0c;
+  font-family: 'Cormorant SC', serif;
+  font-size: 2vh;
+  letter-spacing: 6px;
+  font-weight: bold;
+  border-radius: 26px;
+}
+
+.btn:link { 
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 20px 40px;
+  display: inline-block;
+  border-radius: 26px;
+  position: relative;
+ }
+
+.btn:hover {
+  transform: translate(-3px);
+  box-shadow: 0 8px 8px #041d0cce;
+  transition: all 0.3s;
+}
+
+#input{
+  width: 20vw;
+  height: 4vh;
+  text-align: center;
+  font-family: 'Cormorant SC', serif;
+  font-size: 1.5vh;
+}
+
+.incorrect-login-input {
+  color: red;
+}
+
+/* Guest Dashboard */
+.amount-spent { 
+  display: flex;
+  justify-content: space-around;
+  position: absolute;
+  top: 30px;
+  right: 10%;
+  width: 15vw;
+  height: 4vh;
+  background-color: white;
+  color: #041d0c;
+  padding: 1.4vh;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px #041d0cce;
+}
+
+.content-box {
+  display: flex;
+  align-content: space-between;
+  position: absolute;
+  height: 90vh;
+  margin-top: 8vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.dashboard-content-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80vh;
+  margin-top: 2vh;
+}
+
+.new-reservation-button {
+    display: flex;
+    position: absolute;
+    right: 0%;
+    background-color: white;
+    color: #041d0c;
+    border-radius: 48px;
+}
+
+.dash-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40vw;
+  height: 65vh;
+  background-color: rgba(255, 255, 255, 0.499);
+  border-radius: 20px;
+  border: solid thin #041d0c;
+}
+
+.dashboard-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  overflow-y: scroll;
+}
+
 
 .hidden {
   display: none;

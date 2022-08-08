@@ -13,10 +13,13 @@ import Booking from "./classes/Booking"
 const loadingPage = document.querySelector(".loading-page");
 const username = document.querySelector('.username-input');
 const password = document.querySelector('.password-input');
-const loginButton = document.querySelector('.login-button')
-const incorrectInputMessage = document.querySelector('incorrect-login-input');
+const loginButton = document.querySelector('.login-button');
+const incorrectInputMessage = document.querySelector
+('.incorrect-login-input');
 // 🎛 Customer Dashboard 🎛
-
+const dashboardPage = document.querySelector(".dashboard-page");
+const welcomeMessage = document.querySelector(".customer-welcome");
+const amountSpent = document.querySelector(".total-amount");
 
 // 🌏 Global Variables 🌏
 let allCustomersData;
@@ -41,7 +44,7 @@ function allCustomersFetch() {
     .then(response => response.json())
     .then(data => {
         allCustomersData = data.customers
-        console.log('allCustomersData: ', allCustomersData)
+        // console.log('allCustomersData ln 47: ', allCustomersData)
         getGuests()
     })
 }
@@ -51,24 +54,32 @@ function allCustomersFetch() {
 function getGuests() {
     allCustomersData.forEach(guest => {
         guests.push(new Customer(guest))
-        console.log('guest ln 53: ', guest)
+        // console.log('guest ln 53: ', guest)
 })
 };
 
 function login(e) {
     e.preventDefault();
-    console.log('guests ln 59: ', guests)
+    // console.log('guests ln 59: ', guests)
     return guests.find(guest => {
         if(guest.username === username.value && password.value === 'overlook2021') {
             hide(loadingPage)
-            console.log('guest: ', guest)
+            show(dashboardPage)
+            console.log('guest ln 66: ', guest)
+            greetGuest(guest)
             return guest
-}
-
+        } else {
+            show(incorrectInputMessage)
+        }
     })
 };
 
+function greetGuest(guest) {
+// console.log('guest ln 78: ', guest)
+    welcomeMessage.innerText = `Welcome, ${guest.name}`
+    amountSpent.innerText = `$${guest.expenses}`
 
+}
 
 const show = (element) => {
     element.classList.remove("hidden");

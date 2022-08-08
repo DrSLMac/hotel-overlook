@@ -30,12 +30,12 @@
       <div class="login-container">
         <form class="log-in">
           <div class="username-container">
-            <label for="username">Enter Username:</label>
-            <input class="username-input" id="username" type="text">
-            <label for="password">Enter Password:</label>
-            <input class="password-input" id="password" type="text">
+            <label for="username" id="label">Enter Username:</label>
+            <input class="username-input" id="input" type="text">
+            <label for="password" id="label">Enter Password:</label>
+            <input class="password-input" id="input" type="text">
           </div>
-            <button class="login-button">Log In</button>
+            <button class="login-button btn">Log In</button>
             <p class="incorrect-login-input hidden">The username or password that was entered is incorrect. Please try again.</p>
         </form>
       </div>  
@@ -43,32 +43,36 @@
     
 <!-- Customer Dashboard -->
     <section class="dashboard-page hidden">
-      <div class="customer-welcome">
+      <!-- <div class="customer-welcome">
         <h3>Welcome!</h3>
-      </div>
+      </div> -->
       <div class="amount-spent">
         <p class="spent-text">Total Spent:</p>
         <p class="total-amount">$400</p>
       </div>
-      <article class="dashboard-container content box">
-        <div class="button-box" id="new-reservation-button">
-          <a href="#" class="button">Make a New Reservation</a>
+
+      <article class="dashboard-container content-box">
+        <div class="button-box new-reservation-button">
+          <a href="#" class="btn">Make a New Reservation</a>
         </div>
         <div class="dashboard-content-container">
-          <section class="dashboard-future-reservations">
+          <section class="dash-future-reservations dash-content">
             <h2 class="booking-heading">Upcoming Reservations</h2>
             <div class="dashboard-grid future-grid">
                 <!-- future booking tiles in a grid -->
             </div>
           </section>
-          <section class="dashboard-past-reservations">
+          <section class="dashboard-past-reservations dash-content">
             <h2 class="booking-heading">Past Reservations</h2>
             <div class="dashboard-grid past-grid">
               <!-- past bookings tiles in a grid -->
             </div>
           </section>
-        </article>
+        </div>  
+      </article>
+
     </section>
+
   </main>
   <script src="bundle.js"></script>
 </body>
