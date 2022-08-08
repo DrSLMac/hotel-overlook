@@ -22,31 +22,31 @@ describe('Rooms Class', () => {
     expect(Rooms).to.a('function');
   });
 
-  it.skip('should be an instance of Booking', () => {
+  it('should be an instance of Booking', () => {
     expect(newRoom).to.be.an.instanceOf(Rooms)
   });
 
-  it.skip('should have a room number', () => {
+  it('should have a room number', () => {
     expect(newRoom.number).to.equal(1)
   });
 
-  it.skip('should have a room type', () => {
+  it('should have a room type', () => {
     expect(newRoom.roomType).to.equal("residential suite")
   });
 
-  it.skip('should have a bidet', () => {
+  it('should have a bidet', () => {
     expect(newRoom.bidet).to.equal(true)
   });
 
-  it.skip('should have a bed size', () => {
+  it('should have a bed size', () => {
     expect(newRoom.bedSize).to.equal('queen')
   });
 
-  it.skip('should clarify how many beds are in the room', () => {
+  it('should clarify how many beds are in the room', () => {
     expect(newRoom.numBeds).to.equal(1)
   });
 
-  it.skip('should give a price per night', () => {
+  it('should give a price per night', () => {
     expect(newRoom.costPerNight).to.equal(358.4)
   })
 });
