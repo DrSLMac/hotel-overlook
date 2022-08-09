@@ -79,7 +79,7 @@ function login(e) {
         if(guest.username === username.value && password.value === 'overlook2021') {
             hide(loadingPage)
             show(dashboardPage)
-            console.log('guest ln 66: ', guest)
+            // console.log('guest ln 66: ', guest)
             greetGuest(guest)
             getGuestBookingData(allBookingsData, allRoomsData)
             return guest

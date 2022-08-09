@@ -5,7 +5,7 @@ class Customer {
         this.username = `customer${this.customerId}`;
         this.password = "overlook2021";
         this.totalSpent = 0;
-        this.roomsBooked = [];
+        this.roomsBooked = [];//need past booking and future booking
         this.bookingRoomDetails = [];
         this.filteredBookings = [];
         this.errorMessage = "";
@@ -14,6 +14,8 @@ class Customer {
     getHotelRoomDetails(bookingsRepo, roomsData) {//checked and good
         // console.log('bookRepo ln 15: ', bookingsRepo)
         const fullBookingDetails = bookingsRepo.reduce((roomsArray, booking) => {
+            // console.log('roomsData ln 16: ', roomsData)
+            // console.log('bookingsRepo ln 17: ', bookingsRepo)
             roomsData.forEach(room => {
                 if(room.number === booking.roomNumber) {
                     const fullBookingDetails = {
@@ -57,7 +59,7 @@ class Customer {
                 this.bookingRoomDetails.splice(this.bookingRoomDetails.indexOf(hotelRoom), 1)
             }
         })
-// console.log("this.roomsBooked: ", this.roomsBooked)
+// console.log("this.roomsBooked ln 57: ", this.roomsBooked)
 // console.log('bookingRoomDetails: ', this.bookingRoomDetails)
         this.filteredBookings.forEach(filteredRoom => {
             if(filteredRoom.bookingId === roomId) {
