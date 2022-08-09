@@ -1,8 +1,8 @@
 import chai from 'chai';
 const expect = chai.expect;
-import Rooms from '../src/classes/Rooms';
+import Room from '../src/classes/Room';
 
-describe('Rooms Class', () => {
+describe('Room Class', () => {
   let newRoom;
 
   beforeEach(() => {
@@ -15,15 +15,15 @@ describe('Rooms Class', () => {
       costPerNight: 358.4
     }
 
-    newRoom = new Rooms(roomSample);
+    newRoom = new Room(roomSample);
   })
 
   it('should be a function', () => {
-    expect(Rooms).to.a('function');
+    expect(Room).to.a('function');
   });
 
   it('should be an instance of Booking', () => {
-    expect(newRoom).to.be.an.instanceOf(Rooms)
+    expect(newRoom).to.be.an.instanceOf(Room)
   });
 
   it('should have a room number', () => {
