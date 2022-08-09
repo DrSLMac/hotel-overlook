@@ -147,7 +147,7 @@ h3 {
   position: absolute;
   top: 30px;
   right: 10%;
-  width: 15vw;
+  width: 20vw;
   height: 4vh;
   background-color: white;
   color: #041d0c;
@@ -201,6 +201,25 @@ h3 {
   flex-wrap: wrap;
   justify-content: space-around;
   overflow-y: scroll;
+}
+
+.booking-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  background-image: linear-gradient(to left, rgba(255, 255, 255, .7), rgba(220, 235, 228, 0.7)), url(../images/room-view.png);
+  background-size: cover;
+  color:#041d0c;
+  border-radius: 10px;
+  padding-left: 1vw;
+  margin: 5px;
+  box-shadow: 0 6px 12px #595d63;
+}
+
+.past-box {
+  width: 12vw;
+  height: 14vh;
 }
 
 

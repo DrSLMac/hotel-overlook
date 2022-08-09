@@ -140,7 +140,7 @@ describe('Customer Class', () => {
   it("should be able to view previously booked rooms", () => {
       newCustomer.getHotelRoomDetails(bookingsRepo, roomsData);
       console.log(newCustomer.findPastBookings());
-      expect(newCustomer.pastBookings).to.deep.equal([
+      expect(newCustomer.roomsBooked).to.deep.equal([
         {
           bookingId: '5fwrgu4i7k55hl6x8',
           customerID: 1,
@@ -181,8 +181,10 @@ describe('Customer Class', () => {
     newCustomer.getHotelRoomDetails(bookingsRepo, roomsData)
     newCustomer.bookHotelRoom("5fwrgu4i7k55hl6td")
     newCustomer.bookHotelRoom("5fwrgu4i7k55hl6tc")
+    newCustomer.findPastBookings()
     newCustomer.getTotalSpent();
-    expect(newCustomer.totalSpent).to.equal("767.87");
+    
+    expect(newCustomer.totalSpent).to.equal("1486.49");
   })
 
   it("should receive message when no rooms are avaible on requested date", () => {

@@ -20,11 +20,14 @@ const incorrectInputMessage = document.querySelector
 const dashboardPage = document.querySelector(".dashboard-page");
 const welcomeMessage = document.querySelector(".customer-welcome");
 const amountSpent = document.querySelector(".total-amount");
+const futureBookings = document.querySelector(".future-grid");
+const pastBookings = document.querySelector(".past-grid")
+const newReservationButton = document.querySelector(".new-reservation-button")
 
 // 🌏 Global Variables 🌏
 let allCustomersData;
 let guests = [];
-let currentCustomer;
+let currentGuest;
 let allRoomsData;
 let allBookingsData;
 let roomNumber;
@@ -89,6 +92,7 @@ function allBookingsFetch() {
     allBookingsFetch()
 })
 loginButton.addEventListener('click', login);
+newReservationButton.addEventListener('click', showAvailableRooms)
 
 
 // 👇🏽👇🏽 Functions & Event Handlers 👇🏽👇🏽
@@ -106,7 +110,6 @@ function updateBookingData(bookingsData, roomsData) {
 function greetGuest(guest) {
 // console.log('guest ln 78: ', guest.name)
     welcomeMessage.innerText = `Welcome Back, ${guest.name}!`
-    amountSpent.innerText = `$${guest.totalSpent}`
 }
 
 function login(e) {
@@ -117,9 +120,13 @@ function login(e) {
             show(dashboardPage)
             greetGuest(guest)
             updateBookingData(allBookingsData, allRoomsData)
+            currentGuest = guest
             guest.findPastBookings()
+console.log('currentGuest ln 122: ', guest.findPastBookings())
+            getTotalGuestExpenses()
+            console.log('getTotalGuestExpenses: ln 126', getTotalGuestExpenses())
+            updateGuestAllBookingsContainer()
             // showRoomOptions()
-            currentGuest = guest;
             return guest
         } else {
             show(incorrectInputMessage)
@@ -127,16 +134,38 @@ function login(e) {
     })
 };
 
-function getGuestPastBookings() {
-    guests.forEach(guest => guest.findPastBookings())
-    // updateGuestAllBookings();
-    // totalGuestExpenses();
+function getTotalGuestExpenses() {
+    currentGuest.findPastBookings();
+    let expenses = currentGuest.getTotalSpent().toFixed(2)
+    console.log('currentGuest ln 139: ', currentGuest)
+    console.log('expenses ln 140:,', expenses)
+    amountSpent.innerText = `$${expenses}`
+    console.log('totalspent ln 145: ', expenses)
 }
 
-// ⭐️ ⭐️ 📑 Functions needed
-// 1. get previous bookings for each guest
-// 2. get total amount spent
-// 3. 
+function updateGuestAllBookingsContainer() {
+    futureBookings.innerHTML = " ";
+    pastBookings.innerHTML = " ";
+    currentGuest.findPastBookings();
+    console.log('currentGuest.findPastBookings(): ', currentGuest.findPastBookings());
+    currentGuest.roomsBooked.forEach(booking => {
+        console.log('booking ln 150: ', booking)
+        pastBookings.innerHTML += `
+        <div class="past-box booking-content">
+        <p class="booking-id hidden">${booking.bookingId}</p>
+        <p class="past-content">Room ${booking.roomNumber}</p>
+        <p class="past-cost"> Cost $${booking.costPerNight}</p>
+        <p class="past-content">${booking.dateOfStay}</p>
+      </div>
+        `
+    })
+}
+
+
+function showAvailableRooms() {
+    hide(loadingPage);
+    hide(dashboardPage)
+}
 
 const show = (element) => {
     element.classList.remove("hidden");
