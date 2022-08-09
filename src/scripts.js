@@ -28,50 +28,86 @@ let currentCustomer;
 let allRoomsData;
 let allBookingsData;
 let roomNumber;
-let chosedDate;
+let chosenDate;
 
-// 🎧 Event Listeners 🎧
-window.addEventListener("load", () => {
-    // getCurrentDate();
-    allCustomersFetch()
-    allRoomsFetch()
-    allBookingsFetch()
-console.log('allCustomersFetch() ln 38: ', allCustomersFetch())
-})
-loginButton.addEventListener('click', login);
 
 // 🐕 Fetch Functions 🐕
 function allCustomersFetch() {
     fetch(`http://localhost:3001/api/v1/customers`)
     .then(response => response.json())
     .then(data => {allCustomersData = data.customers
-        getGuests()
         // console.log('allCustomersData ln 49: ', allCustomersData)
+        getGuests()
     })
 }
 
 function allRoomsFetch() {
     fetch(`http://localhost:3001/api/v1/rooms`)
     .then(response => response.json())
-    .then(data => {allRoomsData = data.rooms})
-    // console.log('rooms data ln 65: ', allRoomsData)
+    .then(data => {allRoomsData = data.rooms
+        // console.log('rooms data ln 65: ', allRoomsData)
+    })
 }
 
 function allBookingsFetch() {
     fetch(`http://localhost:3001/api/v1/bookings`)
     .then(response => response.json())
-    .then(data => {allBookingsData = data.bookings})
-console.log('allBookingsdata ln 64: ', allBookingsData)
+    .then(data => {allBookingsData = data.bookings
+        // console.log('allBookingsdata ln 64: ', allBookingsData)
+    })
 }
 
-// 👇🏽👇🏽 Functions & Event Handlers 👇🏽👇🏽
+// function addNewReservationPost() {
+    //     fetch(`http://localhost:3001/api/v1/bookings`, {
+        //         method: "POST",
+        //         headers: {"Content-Type": "application/json"},
+        //         body: JSON.stringify({
+            //             userID: currentGuest.id,
+            //             date: SelectedDate,
+            //             roomNumber: roomNumber
+            //         })
+            //     })
+            //     .then(response => {
+                //         if (!response.ok) {
+                    //             throw new Error('There was an error in booking your reservation. We apologize for the inconvenience. Please try again.')
+                    //         } else {
+                        //             errorMessage.innerHTML = ''
+                        //             return response.json()
+                        //         }
+                        //     })
+                        //     .then(() => allBookingsFetch())
+                        //     .catch(err => {
+                            //         errorMessage.innerHTML = `${err.message}`
+                            //     })
+                            // }
+                            
+// 🎧 Event Listeners 🎧
+  window.addEventListener("load", () => {
+   // getCurrentDate();
+    allCustomersFetch()
+    allRoomsFetch()
+    allBookingsFetch()
+})
+loginButton.addEventListener('click', login);
 
+
+// 👇🏽👇🏽 Functions & Event Handlers 👇🏽👇🏽
 function getGuests() {
     allCustomersData.forEach(guest => {
-        guests.push(new Customer(guest))
-        // console.log('guest ln 71: ', guest)
+    guests.push(new Customer(guest))
     })
 };
+
+function updateBookingData(bookingsData, roomsData) {
+    guests.forEach(guest => {guest.getHotelRoomDetails(bookingsData, roomsData)
+    })
+}
+
+function greetGuest(guest) {
+// console.log('guest ln 78: ', guest.name)
+    welcomeMessage.innerText = `Welcome Back, ${guest.name}!`
+    amountSpent.innerText = `$${guest.totalSpent}`
+}
 
 function login(e) {
     e.preventDefault();
@@ -79,9 +115,11 @@ function login(e) {
         if(guest.username === username.value && password.value === 'overlook2021') {
             hide(loadingPage)
             show(dashboardPage)
-            // console.log('guest ln 66: ', guest)
             greetGuest(guest)
-            getGuestBookingData(allBookingsData, allRoomsData)
+            updateBookingData(allBookingsData, allRoomsData)
+            guest.findPastBookings()
+            // showRoomOptions()
+            currentGuest = guest;
             return guest
         } else {
             show(incorrectInputMessage)
@@ -89,18 +127,10 @@ function login(e) {
     })
 };
 
-function greetGuest(guest) {
-// console.log('guest ln 78: ', guest.name)
-    welcomeMessage.innerText = `Welcome Back, ${guest.name}!`
-    // amountSpent.innerText = `$${guest.expenses}`
-}
-
-function getGuestBookingData(bookingsRepo) {
-    guests.forEach(guest => {
-        console.log('guest: ', guest)
-        guest.getHotelRoomDetails(bookingsRepo)
-    })
-    console.log('getGuestBookingData() ln 103: ', getGuestBookingData())
+function getGuestPastBookings() {
+    guests.forEach(guest => guest.findPastBookings())
+    // updateGuestAllBookings();
+    // totalGuestExpenses();
 }
 
 // ⭐️ ⭐️ 📑 Functions needed

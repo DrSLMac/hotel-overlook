@@ -5,17 +5,15 @@ class Customer {
         this.username = `customer${this.customerId}`;
         this.password = "overlook2021";
         this.totalSpent = 0;
-        this.roomsBooked = [];//need past booking and future booking
         this.bookingRoomDetails = [];
+        this.roomsBooked = [];
+        this.pastBookings = [];
         this.filteredBookings = [];
         this.errorMessage = "";
     }
     
-    getHotelRoomDetails(bookingsRepo, roomsData) {//checked and good
-        // console.log('bookRepo ln 15: ', bookingsRepo)
+    getHotelRoomDetails(bookingsRepo, roomsData) {
         const fullBookingDetails = bookingsRepo.reduce((roomsArray, booking) => {
-            // console.log('roomsData ln 16: ', roomsData)
-            // console.log('bookingsRepo ln 17: ', bookingsRepo)
             roomsData.forEach(room => {
                 if(room.number === booking.roomNumber) {
                     const fullBookingDetails = {
@@ -32,13 +30,11 @@ class Customer {
                     roomsArray.push(fullBookingDetails)
                 }
             })
-            // console.log('roomsArray: ', roomsArray)
             return roomsArray
         }, [])
         this.bookingRoomDetails = fullBookingDetails;
-// console.log('this.bookingRoomDetails: ', this.bookingRoomDetails)
-// console.log('fullBookingDetails: ', fullBookingDetails)
-        return fullBookingDetails
+        // console.log('this.bookingRoomDetails ln 36: ', this.bookingRoomDetails.length)
+        return fullBookingDetails//shows 31 full booking details
     }
 
     filterRooms(date, type) {
@@ -66,17 +62,19 @@ class Customer {
                 this.filteredBookings.splice(this.filteredBookings.indexOf(filteredRoom), 1)
             }
         })
+        // console.log('this.roomsBooked ln 70: ', this.roomsBooked)
     };
 
     findPastBookings() {
         this.bookingRoomDetails.forEach(booking => {
+            // console.log('booking ln 75: ', booking)
             if(this.customerId === booking.customerID) {
-                this.roomsBooked.push(booking)
+                this.pastBookings.push(booking)
                 this.bookingRoomDetails.splice(this.bookingRoomDetails.indexOf(booking), 1)
             }
         })
-        console.log('this.roomsBooked: ', this.roomsBooked)
-        return this.roomsBooked
+        // console.log('this.pastBookings ln: ', this.pastBookings)
+        return this.pastBookings
     };
 
     getTotalSpent() {
