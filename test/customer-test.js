@@ -9,19 +9,32 @@ describe('Customer Class', () => {
     beforeEach(() => {
       customersData = sampleDataSet.customersData;
       newCustomer = new Customer(customersData[0])
+      console.log('newCustomer ln 12: ', newCustomer)
       newCustomer2 = new Customer(customersData[1])
 
-      bookingsRepo = [{ //10 bookings
+      bookingsRepo = [{ //11 bookings
+          id: "5fwrgu4i7k55hl6t8",
+          userID: 1,
+          date: "2022/02/05",
+          roomNumber: 12
+        },
+        {
+          id: "5fwrgu4i7k55hl72q",
+          userID: 1,
+          date: "2022/01/19",
+          roomNumber: 19
+        },
+        {
+          id: "5fwrgu4i7k55hl6x8",
+          userID: 1,
+          date: "2023/01/11",
+          roomNumber: 20
+          },
+          { 
           id: "5fwrgu4i7k55hl6sz",
           userID: 9,
           date: "2022/04/22",
           roomNumber: 15
-          },
-          {
-          id: "5fwrgu4i7k55hl6t5",
-          userID: 43,
-          date: "2022/01/24",
-          roomNumber: 24
           },
           {
           id: "5fwrgu4i7k55hl6t6",
@@ -34,12 +47,6 @@ describe('Customer Class', () => {
           userID: 20,
           date: "2022/02/16",
           roomNumber: 7
-          },
-          {
-          id: "5fwrgu4i7k55hl6t8",
-          userID: 1,
-          date: "2022/02/05",
-          roomNumber: 12
           },
           {
           id: "5fwrgu4i7k55hl6t9",
@@ -276,16 +283,16 @@ describe('Customer Class', () => {
   it("should be able to get full booking room details", () => {
     newCustomer.getHotelRoomDetails(bookingsRepo, roomsData);
     expect(newCustomer.bookingRoomDetails[0]).to.deep.equal({
-          bookingId: '5fwrgu4i7k55hl6sz',
-          customerID: 9,
-          roomNumber: 15,
-          roomType: 'residential suite',
-          bidet: false,
-          bedSize: 'full',
-          numBeds: 1,
-          costPerNight: 294.56,
-          dateOfStay: '2022/04/22'
-        })
+      bookingId: '5fwrgu4i7k55hl6t8',
+      customerID: 1,
+      roomNumber: 12,
+      roomType: 'single room',
+      bidet: false,
+      bedSize: 'twin',
+      numBeds: 2,
+      costPerNight: 172.09,
+      dateOfStay: '2022/02/05'
+    })
   })
 
   it("should be able to filter rooms by date", () => {
@@ -356,18 +363,8 @@ describe('Customer Class', () => {
     newCustomer.getHotelRoomDetails(bookingsRepo, roomsData);
     newCustomer.bookHotelRoom("5fwrgu4i7k55hl6sz");
     newCustomer.bookHotelRoom("5fwrgu4i7k55hl6t7");
-    expect(newCustomer.bookingRoomDetails).to.deep.equal([
-        {
-          bookingId: '5fwrgu4i7k55hl6t6',
-          customerID: 13,
-          roomNumber: 12,
-          roomType: 'single room',
-          bidet: false,
-          bedSize: 'twin',
-          numBeds: 2,
-          costPerNight: 172.09,
-          dateOfStay: '2022/01/10'
-        },
+    expect(newCustomer.bookingRoomDetails).to.deep.equal(
+      [
         {
           bookingId: '5fwrgu4i7k55hl6t8',
           customerID: 1,
@@ -378,6 +375,39 @@ describe('Customer Class', () => {
           numBeds: 2,
           costPerNight: 172.09,
           dateOfStay: '2022/02/05'
+        },
+        {
+          bookingId: '5fwrgu4i7k55hl72q',
+          customerID: 1,
+          roomNumber: 19,
+          roomType: 'single room',
+          bidet: false,
+          bedSize: 'queen',
+          numBeds: 1,
+          costPerNight: 374.67,
+          dateOfStay: '2022/01/19'
+        },
+        {
+          bookingId: '5fwrgu4i7k55hl6x8',
+          customerID: 1,
+          roomNumber: 20,
+          roomType: 'residential suite',
+          bidet: false,
+          bedSize: 'queen',
+          numBeds: 1,
+          costPerNight: 343.95,
+          dateOfStay: '2023/01/11'
+        },
+        {
+          bookingId: '5fwrgu4i7k55hl6t6',
+          customerID: 13,
+          roomNumber: 12,
+          roomType: 'single room',
+          bidet: false,
+          bedSize: 'twin',
+          numBeds: 2,
+          costPerNight: 172.09,
+          dateOfStay: '2022/01/10'
         },
         {
           bookingId: '5fwrgu4i7k55hl6t9',
@@ -448,18 +478,42 @@ describe('Customer Class', () => {
   it("should be able to view previously booked rooms", () => {
       newCustomer.getHotelRoomDetails(bookingsRepo, roomsData);
       newCustomer.findPastBookings();
-      expect(newCustomer.roomsBooked[0]).to.deep.equal({
-                  bookingId: '5fwrgu4i7k55hl6t8',
-                  customerID: 1,
-                  roomNumber: 12,
-                  roomType: 'single room',
-                  bidet: false,
-                  bedSize: 'twin',
-                  numBeds: 2,
-                  costPerNight: 172.09,
-                  dateOfStay: '2022/02/05'
-          })
+      expect(newCustomer.roomsBooked).to.deep.equal([
+          {
+            bookingId: '5fwrgu4i7k55hl6t8',
+            customerID: 1,
+            roomNumber: 12,
+            roomType: 'single room',
+            bidet: false,
+            bedSize: 'twin',
+            numBeds: 2,
+            costPerNight: 172.09,
+            dateOfStay: '2022/02/05'
+          },
+          {
+            bookingId: '5fwrgu4i7k55hl72q',
+            customerID: 1,
+            roomNumber: 19,
+            roomType: 'single room',
+            bidet: false,
+            bedSize: 'queen',
+            numBeds: 1,
+            costPerNight: 374.67,
+            dateOfStay: '2022/01/19'
+          }
+        ])
   })
+          // { 🤦🏼‍♀️ Future booking
+          //   bookingId: '5fwrgu4i7k55hl6x8',
+          //   customerID: 1,
+          //   roomNumber: 20,
+          //   roomType: 'residential suite',
+          //   bidet: false,
+          //   bedSize: 'queen',
+          //   numBeds: 1,
+          //   costPerNight: 343.95,
+          //   dateOfStay: '2023/01/11'
+          // }
 
   it("should be able to see sum of total money spent", () => {
     newCustomer.getHotelRoomDetails(bookingsRepo, roomsData)
