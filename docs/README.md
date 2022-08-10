@@ -44,11 +44,11 @@ Visit the published site [here](https://drslmac.github.io/hotel-overlook/)
 
 ## Set Up
 ### Backend Set Up
-1. Go to this [repository](https://github.com/turingschool-examples/whats-cookin-api)
+1. Go to this [repository](https://github.com/turingschool-examples/overlook-api)
 2. Follow set up instructions.
 
 ### Frontend Set Up
-1. Clone [this repository](https://github.com/DrSLMac/pantry-to-pan) to your local machine
+1. Clone [this repository](https://github.com/DrSLMac/hotel-overlook) to your local machine
 2. In your terminal, run:
 
  `npm install`
