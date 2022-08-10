@@ -74,7 +74,7 @@ describe('Customer Class', () => {
         dateOfStay: '2022/01/31'
       }
     ])
-// console.log("newCustomer.filteredBookings: ", newCustomer.filteredBookings)
+console.log("newCustomer.filteredBookings: ", newCustomer.filteredBookings)
   })
 
   it("should be able to book a room", () => {

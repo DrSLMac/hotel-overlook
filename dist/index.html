@@ -36,7 +36,7 @@
             <input class="password-input" id="input" type="text">
           </div>
             <button class="login-button btn">Log In</button>
-            <p class="incorrect-login-input hidden">The username or password that was entered is incorrect. Please try again.</p>
+            <p class="error-message hidden">The username or password that was entered is incorrect. Please try again.</p>
         </form>
       </div>  
     </section>
@@ -71,8 +71,43 @@
         </div>  
       </article>
     </section>
-<!-- New Reservation Page -->
     
+<!-- New Reservation Page -->
+    <section class="available-rooms-page hidden">
+      <div class="back-dash">
+        <p class="back-to-dash">Back to Dashboard</p>
+      </div>
+      <article class="available-box">
+        <h1 class="available-title">Available Rooms</h1>
+        <form class="booking-form">
+          <div class="booking-forms">
+            <div class="booking-date forms">
+              <label for="booking-date">What day would you like to arrive?</label>
+              <input type="date" class="inputs" id="booking-date" name="date" value=""
+              min="" max="2025-01-01">
+            </div>
+            <div class="type-select forms">
+              <label for="room-type" class="room-dropdown labels">Choose a room type:</label>
+
+              <select class="inputs" name="room-type" id="room-type">
+                <option value="any" class="dropdown-all option">See All Available Rooms</option>
+                <option value="residential suite" class="dropdown-res option">Residential Suite</option>
+                <option value="suite" class="dropdown-suite option">Suite</option>
+                <option value="junior suite" class="dropdown-jr option">Junior Suite</option>
+                <option value="single room" class="dropdown-single option">Single Room</option>
+              </select>
+
+            </div>
+          </div>
+          <div class="availability-button" id="check-button">
+            <a href="#" class="btn" id="check-btn">Check Availability</a>
+          </div>
+        </form>
+        <div class="available-rooms-grid">
+          <!-- Available room cards will be generated here -->
+        </div>
+      </article>
+    </section>
   </main>
   <script src="bundle.js"></script>
 </body>
