@@ -152,17 +152,17 @@ export function updateGuestAllBookingsContainer() {
         <div tabindex="0" role="booking-tile-information" class="past-box booking-content">
         <p class="booking-id hidden">${booking.bookingId}</p>
         <p class="past-content">Room ${booking.roomNumber}</p>
-        <p class="past-cost"> Cost $${booking.costPerNight}</p>
+        <p class="past-cost">Cost $${booking.costPerNight}</p>
         <p class="past-content">${booking.dateOfStay}</p>
       </div>
         `
     });
-    futureBookings.map(booking => {
+    futureBookings.map(futureBooking => {
         allFutureBookings.innerHTML += `
-        <div class="future-box booking-content">
-          <p class="booking-id hidden">${booking.bookingId}</p>
-          <p class="future-content">Room ${booking.roomNumber}</p>
-          <p class="future-content">${booking.date}</p>
+        <div tabindex="0" role="future-booking-tile-information" class="future-box booking-content">
+          <p class="booking-id hidden">${futureBooking.bookingId}</p>
+          <p class="future-content">Room ${futureBooking.roomNumber}</p>
+          <p class="future-content">${futureBooking.date}</p>
     
           </div>
         </div>

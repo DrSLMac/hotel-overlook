@@ -215,6 +215,24 @@ h3 {
   background-image: linear-gradient(to left, rgba(255, 255, 255, .7), rgba(220, 235, 228, 0.7)), url(../images/room-view.png);
   background-size: cover;
   color:#041d0c;
+  height: 15vh;
+  width: 12vw;
+  border-radius: 10px;
+  padding-left: 1vw;
+  margin: 5px;
+  box-shadow: 0 6px 12px #595d63;
+}
+
+.future-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  background-image: linear-gradient(to left, rgba(255, 255, 255, .7), rgba(220, 235, 228, 0.7)), url(../images/room-view1.png);
+  background-size: cover;
+  color:#041d0c;
+  height: 15vh;
+  width: 12vw;
   border-radius: 10px;
   padding-left: 1vw;
   margin: 5px;
