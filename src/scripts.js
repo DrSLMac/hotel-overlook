@@ -1,12 +1,14 @@
 import './css/styles.css';
 import './images/favicon-16x16.png';
 import './images/room-view1.png';
-
-import getDetailsData from './apiCalls';
-
+import './images/room-view.png';
+import { data } from "./apiCalls.js";
+import { fetchData } from "./apiCalls.js";
+import { postBooking } from "./apiCalls.js";
 import Customer from "./classes/Customer"
 import Room from "./classes/Room"
 import Booking from "./classes/Booking"
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // 👇🏽👇🏽 Document Query Selectors 👇🏽👇🏽
 
@@ -35,19 +37,17 @@ let bookRoomButtons = document.querySelector(".btn-box")
 // bookRoomButton.addEventListener('click', buttonTest)
 
 // 🌏 Global Variables 🌏
+export let currentGuest;
+export let futureBookings = [];
 let allCustomersData;
 let guests = [];
-let currentGuest;
 let allRoomsData;
 let allBookingsData;
-let futureBookings;
-let roomNumber;
-let currentDay;
-let chosenDate;
-let justBookedRoom;
+let customers;
+let rooms;
+let bookings;
 
 
-// 🐕 Fetch Functions 🐕
 function allCustomersFetch() {
     fetch(`http://localhost:3001/api/v1/customers`)
     .then(response => response.json())
@@ -72,13 +72,19 @@ function allBookingsFetch() {
         // console.log('allBookingsdata ln 64: ', allBookingsData)
     })
 }
+
+Promise.all([data.customers, data.rooms, data.bookings])
+    .then(results => {
+        customers = results[0].customers;
+        rooms = results[1].rooms;
+        bookings = results[2].bookings;
+    }).catch(error => console.log("Failed to retrieve needed data. Please reload the page"));
                             
 // 🎧 Event Listeners 🎧
   window.addEventListener("load", () => {
-   // getCurrentDate();
     allCustomersFetch()
-    allRoomsFetch()
     allBookingsFetch()
+    allRoomsFetch()
     getCurrentDate()
 })
 loginButton.addEventListener('click', login);
@@ -90,7 +96,7 @@ backToDashboard.addEventListener('click', () => {
 })
 
 
-// 👇🏽👇🏽 Functions & Event Handlers 👇🏽👇🏽
+// 👇🏽👇🏽 Functions & Event Handlers 👋🏽 👇🏽👇🏽
 function getGuests() {
     allCustomersData.forEach(guest => {
     guests.push(new Customer(guest))
@@ -103,7 +109,6 @@ function updateBookingData(bookingsData, roomsData) {
 }
 
 function greetGuest(guest) {
-// console.log('guest ln 78: ', guest.name)
     welcomeMessage.innerText = `Welcome Back, ${guest.name}!`
 }
 
@@ -128,6 +133,7 @@ function login(e) {
     })
 };
 
+
 function getTotalGuestExpenses() {
     currentGuest.findPastBookings();
     let expenses = currentGuest.getTotalSpent().toFixed(2)
@@ -137,10 +143,10 @@ function getTotalGuestExpenses() {
     // console.log('totalspent ln 145: ', expenses)
 }
 
-function updateGuestAllBookingsContainer() {
+export function updateGuestAllBookingsContainer() {
+    allFutureBookings.innerHTML = " ";
     pastBookings.innerHTML = " ";
     currentGuest.findPastBookings();
-    // console.log('currentGuest.findPastBookings(): ', currentGuest.findPastBookings());
     currentGuest.roomsBooked.forEach(booking => {
         pastBookings.innerHTML += `
         <div tabindex="0" role="booking-tile-information" class="past-box booking-content">
@@ -150,44 +156,28 @@ function updateGuestAllBookingsContainer() {
         <p class="past-content">${booking.dateOfStay}</p>
       </div>
         `
+    });
+    futureBookings.map(booking => {
+        allFutureBookings.innerHTML += `
+        <div class="future-box booking-content">
+          <p class="booking-id hidden">${booking.bookingId}</p>
+          <p class="future-content">Room ${booking.roomNumber}</p>
+          <p class="future-content">${booking.date}</p>
+    
+          </div>
+        </div>
+      `;
     })
 }
 
-// function updateFutureReservations() {
-//     allFutureBookings.innerHTML = " ";
-
-//     allFutureBookings.innerHTML += `
-//     <div tabindex="0" role="booking-tile-information" class="past-box booking-content">
-//     <p class="booking-id hidden">${booking.bookingId}</p>
-//     <p class="past-content">Room ${booking.roomNumber}</p>
-//     <p class="past-cost"> Cost $${booking.costPerNight}</p>
-//     <p class="past-content">${booking.dateOfStay}</p>
-//   </div>
-//     `
-
-// }
-
-// const postBooking = (customerId, year, month, day, roomNumber) => {
-//     fetch("http://localhost:3001/api/v1/bookings", {
-//       method: "POST",
-//       body: JSON.stringify({
-//         userID: currentGuest,
-//         date:  `${year}/${month}/${day}`,
-//         roomNumber: roomNumber
-//       }),
-//       headers: {
-//         "Content-Type": "application/json"
-//       }
-//     })  .then(response => response.json())
-//         .then(data => {
-//       let guestBooking = new Booking(data.newBooking)
-//       currentGuest.allBookings.push(guestBooking)
-//       currentGuest.availableRooms.splice(currentGuest.availableRooms.indexOf(guestBooking), 1)
-//         updateFutureReservations()
-//       console.log("Booking added successfully")
-//     })
-//         .catch(error => console.log("Booking not added successfully", error))
-//   };
+function getCurrentDate() {
+    let today = new Date().toLocaleDateString()
+    const splitDate = today.split("/")
+    const reverseDate = splitDate.reverse()
+    const joinDate = reverseDate.join("/")
+    console.log('today: ', joinDate)
+    return joinDate;
+}
 
 function makeNewReservationPage() {
     hide(loadingPage);
@@ -196,18 +186,18 @@ function makeNewReservationPage() {
 }
 
 function showAvailableRooms(event) {
-
-    let formattedDate = bookingDate.value
+    const dateParts = bookingDate.value.split("-");
     getCurrentDate()
     currentGuest.filterRooms(bookingDate, roomType);
     allRoomsData.filter(room => {
         if(roomType.value === room.roomType) {
             currentGuest.filteredBookings.push(room)
     availableRoomsGrid.innerHTML = " "
-    currentGuest.filteredBookings.map((room, index) => {
-        console.log('room.number: ', room.number)
-        console.log('currentGuest: ', currentGuest.customerId)
-        console.log('bookingDate.value: ', bookingDate.value)
+    currentGuest.filteredBookings.map((room) => {
+        let userID = currentGuest.customerId;
+        // console.log('room.number: ', room.number)
+        // console.log('currentGuest: ', currentGuest.customerId)
+        // console.log('bookingDate.value: ', bookingDate.value)
         availableRoomsGrid.innerHTML += `
       <div class="flip-card">
         <div class="flip-card-inner">
@@ -222,22 +212,14 @@ function showAvailableRooms(event) {
               <p class="room-description">Bidet: ${room.bidet}</p>
               <p class="room-description">Price Per Night: $${room.costPerNight.toFixed(2)}</p>
             </div>
-            <div onclick="bookHotelRoom()" class="btn-box" id=${index}>
+            <div onclick="postBooking(${userID}, ${dateParts[0]}, ${dateParts[1]}, ${dateParts[2]}, ${room.number});" class="btn-box"   id="book-button">
               <a href="#" class="btn">Book</a>
             </div>
           </div>
         </div>
       </div>
       `;
-      bookRoomButtons = document.querySelectorAll(".btn-box")
-      bookRoomButtons.forEach(bookRoomButton => {
-          bookRoomButton.addEventListener('click', function(event) {
-              let room = currentGuest.filteredBookings[parseInt(event.target.id)]
-              console.log('room ln 235: ', room)
-              console.log('currentGuest.filteredBookings: ', currentGuest.filteredBookings)
-              postApiHelper(room, formattedDate)
-          } )
-      })
+
     }) 
 } else {
         if(currentGuest.filteredBookings.length === 0) {
@@ -250,68 +232,7 @@ function showAvailableRooms(event) {
     })
 }
 
-// buttonTest()
-// function buttonTest() {
-//     console.log('HELLO')
-// }
-
-function getCurrentDate() {
-    let today = new Date().toLocaleDateString()
-    const splitDate = today.split("/")
-    const reverseDate = splitDate.reverse()
-    const joinDate = reverseDate.join("/")
-    console.log('today: ', joinDate)
-    // let date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
-    // currentDay = date
-    // console.log('date: ', currentDay)
-    return joinDate;
-}
-
-function postApiHelper(room, formattedDate) {
-    // console.log('room.number ln 270: ', room.number)
-    justBookedRoom = { userID: currentGuest.customerId, date: formattedDate, roomNumber: room.number }
-    console.log('room.number ln 272: ', room.number)
-    postApiData(justBookedRoom)
-}
-
-
-function postApiData(justBookedRoom) {
-    fetch('http://localhost:3001/api/v1/bookings', {
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(justBookedRoom)
-    }).then(data => data.json()).then(data => {
-        console.log('log of data: ', data)
-    })
-    .catch(error => console.log(error));
-}
-
-  
-// function addNewReservationPost() {
-//     fetch(`http://localhost:3001/api/v1/bookings`, {
-//         method: "POST",
-//         headers: {"Content-Type": "application/json"},
-//         body: JSON.stringify({
-//             userID: currentGuest.id,
-//             date: SelectedDate,
-//             roomNumber: roomNumber
-//         })
-//     })
-//         .then(response => {
-//         if (!response.ok) {
-//         throw new Error('There was an error in booking your reservation. We apologize for the inconvenience. Please try again.')
-//     } else {
-//         errorMessage.innerHTML = ''
-//             return response.json()
-//     }
-// })
-//         .then(() => allBookingsFetch())
-//         .catch(err => {
-//             errorMessage.innerHTML = `${incorrectInputMessage}`
-//     })
-// }
-
-// window.postBooking = postBooking;
+window.postBooking = postBooking;
 
 const show = (element) => {
     element.classList.remove("hidden");

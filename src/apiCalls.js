@@ -1,15 +1,48 @@
-export const getDetailsData = (detailsData) => {
-    return fetch(`http://localhost:3001/api/v1/${detailsData}`)
-            .then((response) => response.json())//this DOES return something that the next .then uses
-            // .then((data) => console.log(data))//this does not return anything, it is just printing to the console. this will access the data from .json
-            // .catch((error) => console.log(error))//if .then fails, then it goes to the catch
+import Booking from "./classes/Booking.js";
+import { currentGuest, futureBookings, updateGuestAllBookingsContainer } from "./scripts.js";
+// import { updatGuestAllBookingsContainer } from "./scripts.js"
+
+// 🐕 Fetch Functions 🐕
+const fetchData = (data) => fetch(`http://localhost:3001/api/v1/${data}`)
+            .then(response => response.json());
+
+
+const postBooking = (userID, year, month, day, roomNumber) => {
+    fetch("http://localhost:3001/api/v1/bookings", {
+        method: "POST",
+        body: JSON.stringify({
+            userID: userID,
+            date: `${year}/${month}/${day}`,
+            roomNumber: roomNumber
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })  .then(response => response.json())
+        .then(data => {
+            let guestBooking = new Booking(data.newBooking)
+console.log('guestBooking: ', guestBooking)
+            futureBookings.push(guestBooking)
+console.log('futureBookings: ', futureBookings)
+            // currentGuest.filteredRooms.splice(currentGuest.filteredRooms.indexOf(guestBooking), 1)
+            updateGuestAllBookingsContainer()
+            console.log("Booking added successfully!")
+        })
+        .catch(error => console.log("Booking not added successfully"))
 };
 
-export const getCustomerData = (id) => {
-    const url = 'http://localhost:3001/api/v1/customers';
-    return fetch(`${url}${id}`)
-            .then((response) => response.json())
+const data ={
+    customers: fetchData("customers"),
+    rooms: fetchData("rooms"),
+    bookings: fetchData("bookings")
 };
+
+export { data }
+export { fetchData }
+export { postBooking }
+
+
+
 
 export const getAllData = (id) => {
     return Promise.all([

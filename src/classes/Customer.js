@@ -10,6 +10,7 @@ class Customer {
         this.roomsBooked = [];
         this.pastBookings = [];
         this.filteredBookings = [];
+        this.futureBookings = [];
         this.errorMessage = "";
     }
     
@@ -58,6 +59,7 @@ class Customer {
         })
         this.filteredBookings.forEach(filteredRoom => {
             if(filteredRoom.bookingId === roomId) {
+                this.roomsBooked.push(filteredRoom)
                 this.filteredBookings.splice(this.filteredBookings.indexOf(filteredRoom), 1)
             }
         })
