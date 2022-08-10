@@ -21,7 +21,7 @@ const incorrectInputMessage = document.querySelector
 const dashboardPage = document.querySelector(".dashboard-page");
 const welcomeMessage = document.querySelector(".customer-welcome");
 const amountSpent = document.querySelector(".total-amount");
-const futureBookings = document.querySelector(".future-grid");
+const allFutureBookings = document.querySelector(".future-grid");
 const pastBookings = document.querySelector(".past-grid")
 const newReservationButton = document.querySelector(".new-reservation-button")
 const avaibleRoomsPage = document.querySelector(".available-rooms-page")
@@ -31,6 +31,8 @@ const checkAvailButton = document.querySelector(".availability-button")
 const bookingDate = document.getElementById("booking-date");
 const roomType = document.getElementById("room-type")
 const availableRoomsGrid = document.querySelector(".available-rooms-grid")
+let bookRoomButtons = document.querySelector(".btn-box")
+// bookRoomButton.addEventListener('click', buttonTest)
 
 // 🌏 Global Variables 🌏
 let allCustomersData;
@@ -38,10 +40,11 @@ let guests = [];
 let currentGuest;
 let allRoomsData;
 let allBookingsData;
-let allFutureBookings;
+let futureBookings;
 let roomNumber;
 let currentDay;
 let chosenDate;
+let justBookedRoom;
 
 
 // 🐕 Fetch Functions 🐕
@@ -135,13 +138,12 @@ function getTotalGuestExpenses() {
 }
 
 function updateGuestAllBookingsContainer() {
-    // futureBookings.innerHTML = " ";
     pastBookings.innerHTML = " ";
     currentGuest.findPastBookings();
     // console.log('currentGuest.findPastBookings(): ', currentGuest.findPastBookings());
     currentGuest.roomsBooked.forEach(booking => {
         pastBookings.innerHTML += `
-        <div class="past-box booking-content">
+        <div tabindex="0" role="booking-tile-information" class="past-box booking-content">
         <p class="booking-id hidden">${booking.bookingId}</p>
         <p class="past-content">Room ${booking.roomNumber}</p>
         <p class="past-cost"> Cost $${booking.costPerNight}</p>
@@ -151,27 +153,41 @@ function updateGuestAllBookingsContainer() {
     })
 }
 
-const postBooking = (customerId, year, month, day, roomNumber) => {
-    fetch("http://localhost:3001/api/v1/bookings", {
-      method: "POST",
-      body: JSON.stringify({
-        userID: currentGuest,
-        date:  `${year}/${month}/${day}`,
-        roomNumber: roomNumber
-      }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })  .then(response => response.json())
-        .then(data => {
-      let guestBooking = new Booking(data.newBooking)
-      currentGuest.allBookings.push(guestBooking)
-      currentGuest.availableRooms.splice(currentGuest.availableRooms.indexOf(guestBooking), 1)
-    //   renderAvailableRooms()
-      console.log("Booking added successfully")
-    })
-        .catch(error => console.log("Booking not added successfully", error))
-  };
+// function updateFutureReservations() {
+//     allFutureBookings.innerHTML = " ";
+
+//     allFutureBookings.innerHTML += `
+//     <div tabindex="0" role="booking-tile-information" class="past-box booking-content">
+//     <p class="booking-id hidden">${booking.bookingId}</p>
+//     <p class="past-content">Room ${booking.roomNumber}</p>
+//     <p class="past-cost"> Cost $${booking.costPerNight}</p>
+//     <p class="past-content">${booking.dateOfStay}</p>
+//   </div>
+//     `
+
+// }
+
+// const postBooking = (customerId, year, month, day, roomNumber) => {
+//     fetch("http://localhost:3001/api/v1/bookings", {
+//       method: "POST",
+//       body: JSON.stringify({
+//         userID: currentGuest,
+//         date:  `${year}/${month}/${day}`,
+//         roomNumber: roomNumber
+//       }),
+//       headers: {
+//         "Content-Type": "application/json"
+//       }
+//     })  .then(response => response.json())
+//         .then(data => {
+//       let guestBooking = new Booking(data.newBooking)
+//       currentGuest.allBookings.push(guestBooking)
+//       currentGuest.availableRooms.splice(currentGuest.availableRooms.indexOf(guestBooking), 1)
+//         updateFutureReservations()
+//       console.log("Booking added successfully")
+//     })
+//         .catch(error => console.log("Booking not added successfully", error))
+//   };
 
 function makeNewReservationPage() {
     hide(loadingPage);
@@ -179,22 +195,19 @@ function makeNewReservationPage() {
     show(avaibleRoomsPage);
 }
 
-function showAvailableRooms() {
-    const splitDate = bookingDate.value.split("-")
+function showAvailableRooms(event) {
+
+    let formattedDate = bookingDate.value
     getCurrentDate()
     currentGuest.filterRooms(bookingDate, roomType);
-    console.log('currentGuest: ', currentGuest.customerId)
     allRoomsData.filter(room => {
-        // console.log('room: ', room)
-        // console.log('room.roomType: ', room.roomType)
-        // console.log('bookdDate: ', bookeDate.value)
         if(roomType.value === room.roomType) {
-            console.log('roomType: ', roomType.value)
             currentGuest.filteredBookings.push(room)
-// console.log("currentGuest: ", currentGuest.filterRooms(bookingDate, roomType)) 
-console.log('currentGuest.filteredBookings: ', currentGuest.filteredBookings)
     availableRoomsGrid.innerHTML = " "
-    currentGuest.filteredBookings.map(room => {
+    currentGuest.filteredBookings.map((room, index) => {
+        console.log('room.number: ', room.number)
+        console.log('currentGuest: ', currentGuest.customerId)
+        console.log('bookingDate.value: ', bookingDate.value)
         availableRoomsGrid.innerHTML += `
       <div class="flip-card">
         <div class="flip-card-inner">
@@ -209,13 +222,22 @@ console.log('currentGuest.filteredBookings: ', currentGuest.filteredBookings)
               <p class="room-description">Bidet: ${room.bidet}</p>
               <p class="room-description">Price Per Night: $${room.costPerNight.toFixed(2)}</p>
             </div>
-            <div onclick="postBooking(${currentGuest.id}, ${splitDate[0]}, ${splitDate[1]}, ${splitDate[2]}, ${room.number});" class="btn-box"   id="book-button">
+            <div onclick="bookHotelRoom()" class="btn-box" id=${index}>
               <a href="#" class="btn">Book</a>
             </div>
           </div>
         </div>
       </div>
       `;
+      bookRoomButtons = document.querySelectorAll(".btn-box")
+      bookRoomButtons.forEach(bookRoomButton => {
+          bookRoomButton.addEventListener('click', function(event) {
+              let room = currentGuest.filteredBookings[parseInt(event.target.id)]
+              console.log('room ln 235: ', room)
+              console.log('currentGuest.filteredBookings: ', currentGuest.filteredBookings)
+              postApiHelper(room, formattedDate)
+          } )
+      })
     }) 
 } else {
         if(currentGuest.filteredBookings.length === 0) {
@@ -226,7 +248,12 @@ console.log('currentGuest.filteredBookings: ', currentGuest.filteredBookings)
         }
         }
     })
-} 
+}
+
+// buttonTest()
+// function buttonTest() {
+//     console.log('HELLO')
+// }
 
 function getCurrentDate() {
     let today = new Date().toLocaleDateString()
@@ -240,7 +267,24 @@ function getCurrentDate() {
     return joinDate;
 }
 
+function postApiHelper(room, formattedDate) {
+    // console.log('room.number ln 270: ', room.number)
+    justBookedRoom = { userID: currentGuest.customerId, date: formattedDate, roomNumber: room.number }
+    console.log('room.number ln 272: ', room.number)
+    postApiData(justBookedRoom)
+}
 
+
+function postApiData(justBookedRoom) {
+    fetch('http://localhost:3001/api/v1/bookings', {
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(justBookedRoom)
+    }).then(data => data.json()).then(data => {
+        console.log('log of data: ', data)
+    })
+    .catch(error => console.log(error));
+}
 
   
 // function addNewReservationPost() {
@@ -267,7 +311,7 @@ function getCurrentDate() {
 //     })
 // }
 
-window.postBooking = postBooking;
+// window.postBooking = postBooking;
 
 const show = (element) => {
     element.classList.remove("hidden");

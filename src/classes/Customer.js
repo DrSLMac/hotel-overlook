@@ -56,8 +56,6 @@ class Customer {
                 this.bookingRoomDetails.splice(this.bookingRoomDetails.indexOf(hotelRoom), 1)
             }
         })
-console.log("this.roomsBooked ln 57: ", this.roomsBooked)
-// console.log('bookingRoomDetails: ', this.bookingRoomDetails)
         this.filteredBookings.forEach(filteredRoom => {
             if(filteredRoom.bookingId === roomId) {
                 this.filteredBookings.splice(this.filteredBookings.indexOf(filteredRoom), 1)

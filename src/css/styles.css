@@ -28,26 +28,31 @@ h1 {
   font-size: 6vh;
   margin: 0;
   color: white;
-  /* padding-left: 2vw; */
   text-shadow: 13px 9px 12px rgba(0,0,0,0.81);
 }
 
 h2 {
+  font-family: 'Cormorant SC', serif;
+  font-size: 2vh;
+  margin: 0;
+  color: white;
+  text-shadow: 13px 9px 12px rgba(0,0,0,0.81);
+}
+
+h3 {
   font-family: 'Cormorant SC', serif;
   font-size: 3vh;
   color: black;
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.507);
 }
 
-h3 {
+.welcome-container {
   font-family: 'Cormorant SC', serif;
-  font-size: 2vh;
+  font-size: 4vh;
   margin: 0;
   color: white;
-  /* padding-left: 2vw; */
   text-shadow: 13px 9px 12px rgba(0,0,0,0.81);
 }
-
 .hotel-header {
   display: flex;
   flex-direction: column;
@@ -242,7 +247,7 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80vw;
+    /* width: 80vw; */
     height: 80vh;
     margin-top: 5vh;
    background-color: rgba(255, 255, 255, 0.499);
