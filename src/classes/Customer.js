@@ -1,10 +1,11 @@
 class Customer {
-    constructor(customerDetails) {
+    constructor(customerDetails, allBookings) {
         this.customerId = customerDetails.id;
         this.name = customerDetails.name;
         this.username = `customer${this.customerId}`;
         this.password = "overlook2021";
         this.totalSpent = 0;
+        this.allBookings = allBookings;
         this.bookingRoomDetails = [];
         this.roomsBooked = [];
         this.pastBookings = [];
@@ -55,8 +56,6 @@ class Customer {
                 this.bookingRoomDetails.splice(this.bookingRoomDetails.indexOf(hotelRoom), 1)
             }
         })
-console.log("this.roomsBooked ln 57: ", this.roomsBooked)
-// console.log('bookingRoomDetails: ', this.bookingRoomDetails)
         this.filteredBookings.forEach(filteredRoom => {
             if(filteredRoom.bookingId === roomId) {
                 this.filteredBookings.splice(this.filteredBookings.indexOf(filteredRoom), 1)
@@ -73,12 +72,10 @@ console.log("this.roomsBooked ln 57: ", this.roomsBooked)
                 this.bookingRoomDetails.splice(this.bookingRoomDetails.indexOf(booking), 1)
             }
         })
-        console.log('this.roomsBooked ln 76: ', this.roomsBooked)
         return this.roomsBooked
     };
 
     getTotalSpent() {
-console.log('this.roomsBooked ln 81 customer class: ', this.roomsBooked)
         const totalCost = this.roomsBooked.reduce((totalSum, room) => {
 // console.log('room.CostPerNight: ', room.costPerNight)
             totalSum += room.costPerNight
