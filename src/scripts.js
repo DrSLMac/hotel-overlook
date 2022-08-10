@@ -22,6 +22,7 @@ const amountSpent = document.querySelector(".total-amount");
 const allFutureBookings = document.querySelector(".future-grid");
 const pastBookings = document.querySelector(".past-grid")
 const newReservationButton = document.querySelector(".new-reservation-button")
+// 🛎 Available Bookings Page 🛎
 const avaibleRoomsPage = document.querySelector(".available-rooms-page")
 const backToDashboard = document.querySelector(".back-dash")
 const checkAvailButton = document.querySelector(".availability-button")
