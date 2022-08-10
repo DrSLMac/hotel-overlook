@@ -2,12 +2,8 @@ import './css/styles.css';
 import './images/favicon-16x16.png';
 import './images/room-view1.png';
 import './images/room-view.png';
-import { data } from "./apiCalls.js";
-import { fetchData } from "./apiCalls.js";
-import { postBooking } from "./apiCalls.js";
+import { bookTheRoom } from "./apiCalls.js";
 import Customer from "./classes/Customer"
-import Room from "./classes/Room"
-import Booking from "./classes/Booking"
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // 👇🏽👇🏽 Document Query Selectors 👇🏽👇🏽
@@ -28,13 +24,10 @@ const pastBookings = document.querySelector(".past-grid")
 const newReservationButton = document.querySelector(".new-reservation-button")
 const avaibleRoomsPage = document.querySelector(".available-rooms-page")
 const backToDashboard = document.querySelector(".back-dash")
-const roomTypeSelection = document.querySelector("#room-type-options")
 const checkAvailButton = document.querySelector(".availability-button")
 const bookingDate = document.getElementById("booking-date");
 const roomType = document.getElementById("room-type")
 const availableRoomsGrid = document.querySelector(".available-rooms-grid")
-let bookRoomButtons = document.querySelector(".btn-box")
-// bookRoomButton.addEventListener('click', buttonTest)
 
 // 🌏 Global Variables 🌏
 export let currentGuest;
@@ -43,16 +36,12 @@ let allCustomersData;
 let guests = [];
 let allRoomsData;
 let allBookingsData;
-let customers;
-let rooms;
-let bookings;
 
-
+// 🐕 Fetch Functions 🐕
 function allCustomersFetch() {
     fetch(`http://localhost:3001/api/v1/customers`)
     .then(response => response.json())
     .then(data => {allCustomersData = data.customers
-        // console.log('allCustomersData ln 49: ', allCustomersData)
         getGuests()
     })
 }
@@ -61,7 +50,6 @@ function allRoomsFetch() {
     fetch(`http://localhost:3001/api/v1/rooms`)
     .then(response => response.json())
     .then(data => {allRoomsData = data.rooms
-        // console.log('rooms data ln 65: ', allRoomsData)
     })
 }
 
@@ -69,16 +57,8 @@ function allBookingsFetch() {
     fetch(`http://localhost:3001/api/v1/bookings`)
     .then(response => response.json())
     .then(data => {allBookingsData = data.bookings
-        // console.log('allBookingsdata ln 64: ', allBookingsData)
     })
 }
-
-Promise.all([data.customers, data.rooms, data.bookings])
-    .then(results => {
-        customers = results[0].customers;
-        rooms = results[1].rooms;
-        bookings = results[2].bookings;
-    }).catch(error => console.log("Failed to retrieve needed data. Please reload the page"));
                             
 // 🎧 Event Listeners 🎧
   window.addEventListener("load", () => {
@@ -94,7 +74,6 @@ backToDashboard.addEventListener('click', () => {
     hide(avaibleRoomsPage)
     show(dashboardPage)
 })
-
 
 // 👇🏽👇🏽 Functions & Event Handlers 👋🏽 👇🏽👇🏽
 function getGuests() {
@@ -124,8 +103,6 @@ function login(e) {
             guest.findPastBookings()
             getTotalGuestExpenses()
             updateGuestAllBookingsContainer()
-            getCurrentDate()
-            // showRoomOptions()
             return guest
         } else {
             show(incorrectInputMessage)
@@ -133,14 +110,10 @@ function login(e) {
     })
 };
 
-
 function getTotalGuestExpenses() {
     currentGuest.findPastBookings();
     let expenses = currentGuest.getTotalSpent().toFixed(2)
-    // console.log('currentGuest ln 139: ', currentGuest)
-    // console.log('expenses ln 140:,', expenses)
     amountSpent.innerText = `$${expenses}`
-    // console.log('totalspent ln 145: ', expenses)
 }
 
 export function updateGuestAllBookingsContainer() {
@@ -187,7 +160,6 @@ function makeNewReservationPage() {
 
 function showAvailableRooms(event) {
     const dateParts = bookingDate.value.split("-");
-    getCurrentDate()
     currentGuest.filterRooms(bookingDate, roomType);
     allRoomsData.filter(room => {
         if(roomType.value === room.roomType) {
@@ -195,9 +167,6 @@ function showAvailableRooms(event) {
     availableRoomsGrid.innerHTML = " "
     currentGuest.filteredBookings.map((room) => {
         let userID = currentGuest.customerId;
-        // console.log('room.number: ', room.number)
-        // console.log('currentGuest: ', currentGuest.customerId)
-        // console.log('bookingDate.value: ', bookingDate.value)
         availableRoomsGrid.innerHTML += `
       <div class="flip-card">
         <div class="flip-card-inner">
@@ -212,7 +181,7 @@ function showAvailableRooms(event) {
               <p class="room-description">Bidet: ${room.bidet}</p>
               <p class="room-description">Price Per Night: $${room.costPerNight.toFixed(2)}</p>
             </div>
-            <div onclick="postBooking(${userID}, ${dateParts[0]}, ${dateParts[1]}, ${dateParts[2]}, ${room.number});" class="btn-box"   id="book-button">
+            <div onclick="bookTheRoom(${userID}, ${dateParts[0]}, ${dateParts[1]}, ${dateParts[2]}, ${room.number});" class="btn-box"   id="book-button">
               <a href="#" class="btn">Book</a>
             </div>
           </div>
@@ -232,7 +201,7 @@ function showAvailableRooms(event) {
     })
 }
 
-window.postBooking = postBooking;
+window.bookTheRoom = bookTheRoom;
 
 const show = (element) => {
     element.classList.remove("hidden");
