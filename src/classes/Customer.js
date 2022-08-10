@@ -35,8 +35,7 @@ class Customer {
             return roomsArray
         }, [])
         this.bookingRoomDetails = fullBookingDetails;
-        // console.log('this.bookingRoomDetails ln 36: ', this.bookingRoomDetails.length)
-        return fullBookingDetails//shows 31 full booking details
+        return fullBookingDetails
     }
 
     filterRooms(date, type) {
@@ -51,7 +50,6 @@ class Customer {
 
     bookHotelRoom(roomId) {
         this.bookingRoomDetails.forEach(hotelRoom => {
-// console.log('hotelRoom: ', hotelRoom.length)
             if(hotelRoom.bookingId === roomId) {
                 this.roomsBooked.push(hotelRoom)
                 this.bookingRoomDetails.splice(this.bookingRoomDetails.indexOf(hotelRoom), 1)
@@ -63,12 +61,10 @@ class Customer {
                 this.filteredBookings.splice(this.filteredBookings.indexOf(filteredRoom), 1)
             }
         })
-        // console.log('this.roomsBooked ln 70: ', this.roomsBooked)
     };
 
     findPastBookings() {
         this.bookingRoomDetails.forEach(booking => {
-            // console.log('booking ln 75: ', booking)
             if(this.customerId === booking.customerID) {
                 this.roomsBooked.push(booking)
                 this.bookingRoomDetails.splice(this.bookingRoomDetails.indexOf(booking), 1)
@@ -79,13 +75,11 @@ class Customer {
 
     getTotalSpent() {
         const totalCost = this.roomsBooked.reduce((totalSum, room) => {
-// console.log('room.CostPerNight: ', room.costPerNight)
+console.log('room.CostPerNight: ', room.costPerNight)
             totalSum += room.costPerNight
-            // console.log('totalSum: ', totalSum)
             return totalSum;
         }, 0)
         this.totalSpent = totalCost.toFixed(2)
-        // console.log('this.totalSpent: ', this.totalSpent)
         return totalCost
     };
     
