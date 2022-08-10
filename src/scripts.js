@@ -125,7 +125,7 @@ function login(e) {
 
 function getTotalGuestExpenses() {
     currentGuest.findAllBookings();
-    let expenses = currentGuest.getPastTotalSpent().toFixed(2)
+    let expenses = currentGuest.getTotalSpent().toFixed(2)
     amountSpent.innerText = `$${expenses}`
 }
 
@@ -144,10 +144,12 @@ export function updateGuestAllBookingsContainer() {
         `
     });
     futureBookings.map(futureBooking => {
+        console.log('futureBooking')
         allFutureBookings.innerHTML += `
         <div tabindex="0" role="future-booking-tile-information" class="future-box booking-content">
           <p class="booking-id hidden">${futureBooking.bookingId}</p>
           <p class="future-content">Room ${futureBooking.roomNumber}</p>
+          <p class="booking-costPerNight hidden">${futureBooking.costPerNight}</p>
           <p class="future-content">${futureBooking.date}</p>
     
           </div>

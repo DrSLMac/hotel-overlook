@@ -110,6 +110,15 @@ class Customer {
     return totalFutureMoneySpent
     }
 
+    getTotalSpent() {
+        let futureTotal = this.getFutureTotalSpent()
+        let pastTotal = this.getPastTotalSpent()
+        console.log('pastTotal: ', pastTotal + futureTotal)
+        // console.log('')
+        return this.totalSpent = futureTotal + pastTotal
+        //  futureTotal + pastTotal
+    }
+
 };
 
 export default Customer;

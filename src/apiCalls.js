@@ -20,6 +20,8 @@ console.log('guestBooking: ', guestBooking)
             futureBookings.push(guestBooking)
 console.log('futureBookings: ', futureBookings)
             updateGuestAllBookingsContainer()
+            
+            getTotalGuestExpenses()
             console.log("Booking added successfully!")
         })
         .catch(error => console.log("Booking not added successfully"))

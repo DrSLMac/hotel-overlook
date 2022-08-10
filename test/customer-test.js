@@ -187,9 +187,10 @@ describe('Customer Class', () => {
     newCustomer.bookHotelRoom("5fwrgu4i7k55hl6td")
     newCustomer.bookHotelRoom("5fwrgu4i7k55hl6tc")
     newCustomer.findAllBookings()
-    newCustomer.getPastTotalSpent();
-    newCustomer.getFutureTotalSpent();
-    expect(newCustomer.totalSpent).to.equal("1486.49");
+    // newCustomer.getPastTotalSpent();
+    // newCustomer.getFutureTotalSpent();
+    newCustomer.getTotalSpent();
+    expect(newCustomer.totalSpent).to.equal(1486.49);
   })
 
   it("should receive message when no rooms are avaible on requested date", () => {
