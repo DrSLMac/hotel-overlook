@@ -76,6 +76,18 @@ backToDashboard.addEventListener('click', () => {
     show(dashboardPage)
 })
 
+// 😌 Helper Functions 😌
+
+window.bookTheRoom = bookTheRoom;
+
+const show = (element) => {
+    element.classList.remove("hidden");
+}
+
+const hide = (element) => {
+    element.classList.add("hidden");
+}
+
 // 👇🏽👇🏽 Functions & Event Handlers 👋🏽 👇🏽👇🏽
 function getGuests() {
     allCustomersData.forEach(guest => {
@@ -101,7 +113,7 @@ function login(e) {
             greetGuest(guest)
             updateBookingData(allBookingsData, allRoomsData)
             currentGuest = guest
-            guest.findPastBookings()
+            guest.findAllBookings()
             getTotalGuestExpenses()
             updateGuestAllBookingsContainer()
             return guest
@@ -112,16 +124,16 @@ function login(e) {
 };
 
 function getTotalGuestExpenses() {
-    currentGuest.findPastBookings();
-    let expenses = currentGuest.getTotalSpent().toFixed(2)
+    currentGuest.findAllBookings();
+    let expenses = currentGuest.getPastTotalSpent().toFixed(2)
     amountSpent.innerText = `$${expenses}`
 }
 
 export function updateGuestAllBookingsContainer() {
     allFutureBookings.innerHTML = " ";
     pastBookings.innerHTML = " ";
-    currentGuest.findPastBookings();
-    currentGuest.roomsBooked.forEach(booking => {
+    currentGuest.findAllBookings();
+    currentGuest.pastBookings.forEach(booking => {
         pastBookings.innerHTML += `
         <div tabindex="0" role="booking-tile-information" class="past-box booking-content">
         <p class="booking-id hidden">${booking.bookingId}</p>
@@ -157,9 +169,11 @@ function makeNewReservationPage() {
     hide(loadingPage);
     hide(dashboardPage);
     show(avaibleRoomsPage);
+    availableRoomsGrid.innerHTML = " "
 }
 
-function showAvailableRooms(event) {
+function showAvailableRooms() {
+    currentGuest.filteredBookings = [];
     const dateParts = bookingDate.value.split("-");
     currentGuest.filterRooms(bookingDate, roomType);
     allRoomsData.filter(room => {
@@ -202,12 +216,3 @@ function showAvailableRooms(event) {
     })
 }
 
-window.bookTheRoom = bookTheRoom;
-
-const show = (element) => {
-    element.classList.remove("hidden");
-}
-
-const hide = (element) => {
-    element.classList.add("hidden");
-}

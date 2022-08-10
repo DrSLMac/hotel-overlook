@@ -74,13 +74,12 @@ describe('Customer Class', () => {
         dateOfStay: '2022/01/31'
       }
     ])
-console.log("newCustomer.filteredBookings: ", newCustomer.filteredBookings)
   })
 
   it("should be able to book a room", () => {
     newCustomer.getHotelRoomDetails(bookingsRepo, roomsData)
     newCustomer.bookHotelRoom("5fwrgu4i7k55hl6td");
-    expect(newCustomer.roomsBooked[0]).to.deep.equal({
+    expect(newCustomer.futureBookings[0]).to.deep.equal({
       bookingId: '5fwrgu4i7k55hl6td',
       customerID: 27,
       roomNumber: 20,
@@ -97,7 +96,7 @@ console.log("newCustomer.filteredBookings: ", newCustomer.filteredBookings)
     newCustomer.getHotelRoomDetails(bookingsRepo, roomsData);
     newCustomer.bookHotelRoom("5fwrgu4i7k55hl6sz");
     newCustomer.bookHotelRoom("5fwrgu4i7k55hl6t7");
-    expect(newCustomer.roomsBooked[0]).to.deep.equal(
+    expect(newCustomer.futureBookings[0]).to.deep.equal(
       { bookingId: '5fwrgu4i7k55hl6sz',
         customerID: 9,
         roomNumber: 15,
@@ -139,19 +138,19 @@ console.log("newCustomer.filteredBookings: ", newCustomer.filteredBookings)
 
   it("should be able to view previously booked rooms", () => {
       newCustomer.getHotelRoomDetails(bookingsRepo, roomsData);
-      console.log(newCustomer.findPastBookings());
-      expect(newCustomer.roomsBooked).to.deep.equal([
-        {
-          bookingId: '5fwrgu4i7k55hl6x8',
-          customerID: 1,
-          roomNumber: 20,
-          roomType: 'residential suite',
-          bidet: false,
-          bedSize: 'queen',
-          numBeds: 1,
-          costPerNight: 343.95,
-          dateOfStay: '2023/01/11'
-        },
+      newCustomer.findAllBookings();
+      expect(newCustomer.pastBookings).to.deep.equal([
+        // {
+        //   bookingId: '5fwrgu4i7k55hl6x8',
+        //   customerID: 1,
+        //   roomNumber: 20,
+        //   roomType: 'residential suite',
+        //   bidet: false,
+        //   bedSize: 'queen',
+        //   numBeds: 1,
+        //   costPerNight: 343.95,
+        //   dateOfStay: '2023/01/11'
+        // },
         {
           bookingId: '5fwrgu4i7k55hl72q',
           customerID: 1,
@@ -165,25 +164,31 @@ console.log("newCustomer.filteredBookings: ", newCustomer.filteredBookings)
         }
       ])
   })
-          // { 🤦🏼‍♀️ Future booking
-          //   bookingId: '5fwrgu4i7k55hl6x8',
-          //   customerID: 1,
-          //   roomNumber: 20,
-          //   roomType: 'residential suite',
-          //   bidet: false,
-          //   bedSize: 'queen',
-          //   numBeds: 1,
-          //   costPerNight: 343.95,
-          //   dateOfStay: '2023/01/11'
-          // }
+
+  it("should be able to view rooms booked in the future", () => {
+    newCustomer.getHotelRoomDetails(bookingsRepo, roomsData);
+    newCustomer.findAllBookings();
+    expect(newCustomer.futureBookings).to.deep.equal([
+          { bookingId: '5fwrgu4i7k55hl6x8',
+            customerID: 1,
+            roomNumber: 20,
+            roomType: 'residential suite',
+            bidet: false,
+            bedSize: 'queen',
+            numBeds: 1,
+            costPerNight: 343.95,
+            dateOfStay: '2023/01/11'
+          }
+    ])
+  }); 
 
   it("should be able to see sum of total money spent", () => {
     newCustomer.getHotelRoomDetails(bookingsRepo, roomsData)
     newCustomer.bookHotelRoom("5fwrgu4i7k55hl6td")
     newCustomer.bookHotelRoom("5fwrgu4i7k55hl6tc")
-    newCustomer.findPastBookings()
-    newCustomer.getTotalSpent();
-    
+    newCustomer.findAllBookings()
+    newCustomer.getPastTotalSpent();
+    newCustomer.getFutureTotalSpent();
     expect(newCustomer.totalSpent).to.equal("1486.49");
   })
 

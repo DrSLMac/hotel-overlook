@@ -5,7 +5,7 @@ class Customer {
         this.username = `customer${this.customerId}`;
         this.password = "overlook2021";
         this.totalSpent = 0;
-        this.allBookings = allBookings;
+        this.allBookings = allBookings
         this.bookingRoomDetails = [];
         this.roomsBooked = [];
         this.pastBookings = [];
@@ -13,6 +13,18 @@ class Customer {
         this.futureBookings = [];
         this.errorMessage = "";
     }
+
+    // getAllBookings() {
+    //     this.allBookings = this.futureBookings.reduce((fullArray, booking) => {
+    //         // console.log('booking: ', booking)
+    //         fullArray.push(booking);
+    //         this.pastBookings.map(booking => fullArray.push(booking))
+    //         // console.log('fullArray: ', fullArray)
+    //         return fullArray
+    //     }, [])
+    //     // console.log('this.allBookings: ', this.allBookings)
+    //     return this.allBookings
+    // }
     
     getHotelRoomDetails(bookingsRepo, roomsData) {
         const fullBookingDetails = bookingsRepo.reduce((roomsArray, booking) => {
@@ -51,38 +63,53 @@ class Customer {
     bookHotelRoom(roomId) {
         this.bookingRoomDetails.forEach(hotelRoom => {
             if(hotelRoom.bookingId === roomId) {
-                this.roomsBooked.push(hotelRoom)
+                this.futureBookings.push(hotelRoom)
                 this.bookingRoomDetails.splice(this.bookingRoomDetails.indexOf(hotelRoom), 1)
             }
         })
         this.filteredBookings.forEach(filteredRoom => {
             if(filteredRoom.bookingId === roomId) {
-                this.roomsBooked.push(filteredRoom)
+                this.futureBookings.push(filteredRoom)
                 this.filteredBookings.splice(this.filteredBookings.indexOf(filteredRoom), 1)
             }
         })
     };
 
-    findPastBookings() {
+    findAllBookings() {
         this.bookingRoomDetails.forEach(booking => {
-            if(this.customerId === booking.customerID) {
-                this.roomsBooked.push(booking)
+            if(this.customerId === booking.customerID && new Date(booking.dateOfStay) >= new Date()) {
+                this.futureBookings.push(booking);
+                this.futureBookings = this.futureBookings.sort((a, b) => new Date(a.dateOfStay) - new Date(b.dateOfStay))
                 this.bookingRoomDetails.splice(this.bookingRoomDetails.indexOf(booking), 1)
+            } else if(this.customerId === booking.customerID && new Date(booking.dateOfStay) < new Date()) {
+                this.pastBookings.push(booking)
+                this.pastBookings = this.pastBookings.sort((a, b) => new Date(a.dateOfStay) - new Date(b.dateOfStay))
             }
         })
-        return this.roomsBooked
+        // console.log('this.futureBookings: ', this.futureBookings)
+        // console.log('this.pastBookings: ', this.pastBookings)
     };
 
-    getTotalSpent() {
-        const totalCost = this.roomsBooked.reduce((totalSum, room) => {
-console.log('room.CostPerNight: ', room.costPerNight)
-            totalSum += room.costPerNight
-            return totalSum;
+    getPastTotalSpent() {
+        const totalPastMoneySpent = this.pastBookings.reduce((totalPastSum, booking) => {
+            totalPastSum += booking.costPerNight
+            return totalPastSum
         }, 0)
-        this.totalSpent = totalCost.toFixed(2)
-        return totalCost
+        console.log('totalPastMoneySpent: ', totalPastMoneySpent)
+        this.totalSpent = totalPastMoneySpent.toFixed(2)
+    return totalPastMoneySpent
     };
-    
-}
+
+    getFutureTotalSpent() {
+        const totalFutureMoneySpent = this.futureBookings.reduce((totalFutureSum, booking) => {
+            totalFutureSum += booking.costPerNight
+            return totalFutureSum
+        }, 0)
+        console.log('totalFutureMoneySpent: ', totalFutureMoneySpent)
+        this.totalSpent = totalFutureMoneySpent.toFixed(2)
+    return totalFutureMoneySpent
+    }
+
+};
 
 export default Customer;
