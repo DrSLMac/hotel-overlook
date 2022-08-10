@@ -35,7 +35,7 @@ The biggest win in this project was being able to figure out the fetch API and b
 - They can click the "Return to Dashboard" button, which will take them back to the main dashboard, where they will not only see all booking, but will be able to see the upcoming booking that were just made. 
 
 ## Deployed Page
-Visit the published site [here](https://DrSLMac.github.io/hotel-overlook/)
+Visit the published site [here](https://drslmac.github.io/hotel-overlook/)
 
 ## Possible Future Extensions
  - A button to cancel a reservation
