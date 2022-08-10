@@ -17,9 +17,9 @@
 
 <body>
   <main>
-    <div class="hotel-header">
-      <h1 class="main-header">The Claymore House</h1>
-      <h2 class="main-header-sub">Where Ancient Tradition Meets Modern Luxury</h2>
+    <div aria-roledescription="page-header" class="hotel-header">
+      <h1 tabindex="0" class="main-header">The Claymore House</h1>
+      <h2 tabindex="0" class="main-header-sub">Where Ancient Tradition Meets Modern Luxury</h2>
     </div>
 <!-- Loading/Log in page -->
     <section class="loading-page">
@@ -47,7 +47,7 @@
         <h2 class="customer-welcome"></h2>
       </div>
       <div class="amount-spent">
-        <p class="spent-text">Total Spent:</p>
+        <p tabindex="0" class="spent-text">Total Spent:</p>
         <p class="total-amount"></p>
       </div>
 
@@ -57,14 +57,14 @@
         </div>
         <div class="dashboard-content-container">
           <section class="dash-future-reservations dash-content">
-            <h3 class="booking-heading">Upcoming Reservations</h3>
-            <div class="dashboard-grid future-grid">
+            <h3 tabindex="0" class="booking-heading">Upcoming Reservations</h3>
+            <div tabindex="0" class="dashboard-grid future-grid">
                 <!-- future booking tiles in a grid -->
             </div>
           </section>
           <section class="dashboard-past-reservations dash-content">
-            <h3 class="booking-heading">All Reservations</h3>
-            <div class="dashboard-grid past-grid">
+            <h3 tabindex="0" class="booking-heading">All Reservations</h3>
+            <div tabindex="0" class="dashboard-grid past-grid">
               <!-- past bookings tiles in a grid -->
             </div>
           </section>
@@ -75,19 +75,19 @@
 <!-- New Reservation Page -->
     <section class="available-rooms-page hidden">
       <div class="back-dash">
-        <p class="back-to-dash">Back to Dashboard</p>
+        <p tabindex="0" class="back-to-dash">Back to Dashboard</p>
       </div>
       <article class="available-box">
-        <h1 class="available-title">Available Rooms</h1>
+        <h1 tabindex="0" class="available-title">Available Rooms</h1>
         <form class="booking-form">
           <div class="booking-forms">
             <div class="booking-date forms">
-              <label for="booking-date">What day would you like to arrive?</label>
+              <label tabindex="0" for="booking-date">What day would you like to arrive?</label>
               <input type="date" class="inputs" id="booking-date" name="date" value=""
               min="" max="2025-01-01">
             </div>
             <div class="type-select forms">
-              <label for="room-type" class="room-dropdown labels">Choose a room type:</label>
+              <label tabindex="0" for="room-type" class="room-dropdown labels">Choose a room type:</label>
 
               <select class="inputs" name="room-type" id="room-type">
                 <option value="any" class="dropdown-all option">See All Available Rooms</option>

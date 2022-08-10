@@ -76,12 +76,17 @@ function allBookingsFetch() {
 // 🎧 Event Listeners 🎧
   window.addEventListener("load", () => {
    // getCurrentDate();
+   show(dashboardPage)
+   hide(loadingPage)
     allCustomersFetch()
     allRoomsFetch()
     allBookingsFetch()
     getCurrentDate()
+    updateBookingData()
+    getTotalGuestExpenses()
+    updateGuestAllBookingsContainer()
 })
-loginButton.addEventListener('click', login);
+// loginButton.addEventListener('click', login);
 newReservationButton.addEventListener('click', makeNewReservationPage)
 checkAvailButton.addEventListener('click', showAvailableRooms)
 backToDashboard.addEventListener('click', () => {
@@ -102,40 +107,40 @@ function updateBookingData(bookingsData, roomsData) {
     })
 }
 
-function greetGuest(guest) {
-// console.log('guest ln 78: ', guest.name)
-    welcomeMessage.innerText = `Welcome Back, ${guest.name}!`
-}
+// function greetGuest(guest) {
+// // console.log('guest ln 78: ', guest.name)
+//     welcomeMessage.innerText = `Welcome Back, ${guest.name}!`
+// }
 
-function login(e) {
-    e.preventDefault();
-    return guests.find(guest => {
-        if(guest.username === username.value && password.value === 'overlook2021') {
-            hide(loadingPage)
-            show(dashboardPage)
-            greetGuest(guest)
-            updateBookingData(allBookingsData, allRoomsData)
-            currentGuest = guest
-            guest.findPastBookings()
-            getTotalGuestExpenses()
-            updateGuestAllBookingsContainer()
-            getCurrentDate()
-            // showRoomOptions()
-            return guest
-        } else {
-            show(incorrectInputMessage)
-        }
-    })
-};
+// function login(e) {
+//     e.preventDefault();
+//     return guests.find(guest => {
+//         if(guest.username === username.value && password.value === 'overlook2021') {
+//             hide(loadingPage)
+//             show(dashboardPage)
+//             greetGuest(guest)
+//             updateBookingData(allBookingsData, allRoomsData)
+//             currentGuest = guest
+//             guest.findPastBookings()
+//             getTotalGuestExpenses()
+//             updateGuestAllBookingsContainer()
+//             getCurrentDate()
+//             // showRoomOptions()
+//             return guest
+//         } else {
+//             show(incorrectInputMessage)
+//         }
+//     })
+// };
 
-function getTotalGuestExpenses() {
-    currentGuest.findPastBookings();
-    let expenses = currentGuest.getTotalSpent().toFixed(2)
-    // console.log('currentGuest ln 139: ', currentGuest)
-    // console.log('expenses ln 140:,', expenses)
-    amountSpent.innerText = `$${expenses}`
-    // console.log('totalspent ln 145: ', expenses)
-}
+// function getTotalGuestExpenses() {
+//     currentGuest.findPastBookings();
+//     let expenses = currentGuest.getTotalSpent().toFixed(2)
+//     // console.log('currentGuest ln 139: ', currentGuest)
+//     // console.log('expenses ln 140:,', expenses)
+//     amountSpent.innerText = `$${expenses}`
+//     // console.log('totalspent ln 145: ', expenses)
+// }
 
 function updateGuestAllBookingsContainer() {
     pastBookings.innerHTML = " ";
